@@ -16,14 +16,18 @@ import config
 # Features excluded from live inference. Two reasons, tracked separately so we
 # can report the cost of each restriction.
 #
-# LEAKAGE: derived from information that does not exist at checkout time.
-#   The D_* columns are timedeltas to prior events; several encode
-#   post-transaction outcomes. Chargeback-derived signals are only known
-#   30-60 days later, so a model using them cannot score a live payment.
+# TEMPORAL DRIFT: the D_* columns are timedeltas (days since the card was first
+#   seen, days since the prior transaction). They ARE computable at checkout, so
+#   this is NOT leakage in the chargeback sense -- an earlier version of this
+#   file claimed that and it was wrong. The real problem is that they are
+#   day-offsets which grow with TransactionDT, so under a temporal split a model
+#   can learn "large D => later period". That is time leakage which does not
+#   survive in production. Excluded here; the alternative is to normalise them
+#   as (D - day_index). Deliberate choice, not an oversight.
 #
 # LATENCY: computable in principle, but not inside a <50ms budget at checkout
 #   (long-window aggregates over the full card/device history).
-LEAKAGE_PREFIXES = ("D",)
+DRIFT_PREFIXES = ("D",)
 LATENCY_PREFIXES = ("V",)  # 339 anonymised Vesta aggregates -- offline features
 
 
@@ -73,12 +77,12 @@ def audit_leakage(df: pd.DataFrame) -> dict:
     label = {"isFraud"}
     ids = {"TransactionID", "TransactionDT"}
 
-    excluded_leakage, excluded_latency, online = [], [], []
+    excluded_drift, excluded_latency, online = [], [], []
     for col in df.columns:
         if col in label or col in ids:
             continue
-        if col.startswith(LEAKAGE_PREFIXES) and col[1:2].isdigit():
-            excluded_leakage.append(col)
+        if col.startswith(DRIFT_PREFIXES) and col[1:2].isdigit():
+            excluded_drift.append(col)
         elif col.startswith(LATENCY_PREFIXES) and col[1:2].isdigit():
             excluded_latency.append(col)
         else:
@@ -86,7 +90,7 @@ def audit_leakage(df: pd.DataFrame) -> dict:
 
     return {
         "online": online,
-        "excluded_leakage": excluded_leakage,
+        "excluded_drift": excluded_drift,
         "excluded_latency": excluded_latency,
     }
 
@@ -108,7 +112,7 @@ def summarise(df: pd.DataFrame, train, calib, test, audit: dict) -> str:
         "",
         "FEATURE AUDIT",
         f"  online (usable)   {len(audit['online'])}",
-        f"  excluded: leakage {len(audit['excluded_leakage'])}  (D_* timedeltas)",
+        f"  excluded: drift   {len(audit['excluded_drift'])}  (D_* time-offsets)",
         f"  excluded: latency {len(audit['excluded_latency'])}  (V_* offline aggregates)",
         "=" * 62,
     ]
@@ -126,8 +130,8 @@ if __name__ == "__main__":
         "# Feature audit\n\n"
         "## Online (used at inference)\n\n"
         + "\n".join(f"- `{c}`" for c in audit["online"])
-        + "\n\n## Excluded — leakage (not knowable at checkout)\n\n"
-        + "\n".join(f"- `{c}`" for c in audit["excluded_leakage"])
+        + "\n\n## Excluded — temporal drift (D_* day-offsets grow with TransactionDT)\n\n"
+        + "\n".join(f"- `{c}`" for c in audit["excluded_drift"])
         + "\n\n## Excluded — latency (offline aggregates)\n\n"
         + "\n".join(f"- `{c}`" for c in audit["excluded_latency"])
         + "\n",
