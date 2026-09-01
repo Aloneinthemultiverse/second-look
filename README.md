@@ -33,6 +33,9 @@ Temporally held-out test set: **118,109 transactions, 3.44% fraud, 42 days.**
 
 | Metric | Value |
 |---|---|
+| **Precision** | **0.604** |
+| **Recall** | **0.441** |
+| False-positive rate | 0.94% |
 | PR-AUC | 0.5091 ± 0.0028 (3 seeds) |
 | ROC-AUC | 0.8870 |
 | **Card Precision@10/day** | **0.919** — 26.7× lift over base rate |
@@ -44,6 +47,25 @@ Temporally held-out test set: **118,109 transactions, 3.44% fraud, 42 days.**
 makes this model look mediocre, but PR-AUC measures performance over the whole
 stream — work no analyst team will ever do. Under a realistic alert budget
 (Dal Pozzolo et al.), **92% of the top ten alerts per day are genuine fraud.**
+
+---
+
+## Against the Track 02 bar
+
+| Requirement (verbatim) | Evidence |
+|---|---|
+| "a working detector, verifier or auto-responder" | Detector + three-way auto-responder (ALLOW / REVIEW / BLOCK). Runs in 7.1 ms. |
+| "for one class of loss" | Card-not-present fraud. One class, not four. |
+| "measured precision and recall on a held-out test set" | **Precision 0.604, recall 0.441** on a temporally held-out slice of 118,109 transactions. Never a random split. |
+| "honest metrics including false-positive cost" | The entire project. FPR 0.94%; false-positive cost priced in rupees (margin + customer LTV) and used to choose every threshold. |
+| "strictly defense-only" | No attack generation, no evasion testing, no synthetic fraud synthesis anywhere in the repo. The one deployment-evidence item we do not meet — adversarial robustness — is omitted *because* of this rule, and declared rather than hidden. |
+
+**On the example directions.** The brief lists chargeback evidence responder,
+return-risk scorer, fraud-spike detector and abuse-ring sentinel. This project is
+none of those four — it is the **detector and decision layer that sits underneath
+all of them**. Every one of those four needs a calibrated fraud probability and a
+cost-justified threshold before it can act; that is what this builds, and it is
+why the work is about the decision layer rather than a specific alert type.
 
 ---
 
