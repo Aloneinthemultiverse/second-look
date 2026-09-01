@@ -148,6 +148,37 @@ capacity. Value per review falls from ₹14,221 at k=10 to ₹1,575 at k=500.
 
 ---
 
+## Deployment-evidence checklist
+
+Scored against the minimum checklist published in *Operational Evidence Gaps for
+LLMs in Fraud Detection and Trust-and-Safety Workflows* (arXiv:2607.13078, 2026).
+
+| Required evidence | Status |
+|---|---|
+| **Latency budget** | ✅ measured, p50 7.1 ms / p95 11.1 ms single-row (model scoring only; feature retrieval excluded) |
+| **Cost per decision** | ✅ explicit rupee cost model, all parameters in `config.py`, varied ±30% |
+| **Decision threshold** | ✅ per-instance τ\*(x) from costs; selected off-test, never on the evaluation slice |
+| **Explanation integrity** | ✅ TreeSHAP attributions; the LLM emits no numeric field and triggers no action |
+| **Adversarial pressure** | ❌ **not evaluated.** Track 02 is strictly defence-only, so no attack generation was built. This is a real gap in deployment evidence, declared rather than glossed. |
+
+Four of five. The fifth is deliberately out of scope under the competition rules.
+
+## Benchmark context
+
+Combinatorial Fusion Analysis reports **ROC-AUC 0.9405** on IEEE-CIS
+(arXiv:2606.10393, 2026) by fusing Random Forest, XGBoost and LightGBM.
+
+This project reaches **0.8870**. The difference is explained, not excused:
+that work fuses three models over all 394 features; this uses a single model over
+the 77 features computable inside a checkout latency budget, on a temporal split,
+with no hyperparameter tuning. `restriction_cost.py` measures what the feature
+restriction alone costs: 0.031 PR-AUC and Rs 1.1M.
+
+The goal here was never a leaderboard number. It was the decision layer on top of
+whatever score you have.
+
+---
+
 ## Verification
 
 | Check | Result |
