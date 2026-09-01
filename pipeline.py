@@ -7,9 +7,10 @@ from __future__ import annotations
 
 import lightgbm as lgb
 import numpy as np
-from sklearn.isotonic import IsotonicRegression
 from sklearn.metrics import average_precision_score
 
+
+import calibrate
 import config
 import data
 import features
@@ -44,17 +45,21 @@ def train_and_score(include_drift: bool = False, include_latency: bool = False):
         valid_sets=[lgb.Dataset(X_ca, label=y_ca)],
         callbacks=[lgb.early_stopping(50, verbose=False)],
     )
-    iso = IsotonicRegression(out_of_bounds="clip")
-    iso.fit(booster.predict(X_ca), y_ca)
-    p_te = iso.predict(booster.predict(X_te))
+    raw_ca = booster.predict(X_ca)
+    raw_te = booster.predict(X_te)
+    p_te = calibrate.fit_calibrator(raw_ca, y_ca)(raw_te)
 
     np.savez(CACHE, y=y_te, amount=amt_te)
     return {
         "n_features": len(cols),
         "scores": p_te,
+        "raw_scores": raw_te,
+        "raw_calib": raw_ca,
+        "y_calib": y_ca,
         "y": y_te,
         "amount": amt_te,
         "pr_auc": float(average_precision_score(y_te, p_te)),
+        "pr_auc_raw": float(average_precision_score(y_te, raw_te)),
     }
 
 

@@ -3,9 +3,10 @@
 Three stages, deliberately separated:
 
   1. DETECTOR   LightGBM -> a ranking score. Not a probability.
-  2. CALIBRATOR isotonic regression fit on the temporal calibration slice
+  2. CALIBRATOR Platt scaling fit on the temporal calibration slice
                 -> an actual probability. Without this, multiplying the score
-                by a rupee cost is arithmetically meaningless.
+                by a rupee cost is arithmetically meaningless. Platt rather
+                than isotonic: see calibrate.py for the measured reason.
   3. POLICY     threshold chosen to minimise expected rupee loss, compared
                 against the F1-optimal threshold and against doing nothing.
 
@@ -17,10 +18,9 @@ import json
 
 import lightgbm as lgb
 import numpy as np
-from sklearn.calibration import calibration_curve
-from sklearn.isotonic import IsotonicRegression
 from sklearn.metrics import average_precision_score, precision_recall_fscore_support
 
+import calibrate
 import config
 import features
 
@@ -97,18 +97,13 @@ def main() -> None:
     raw_te = booster.predict(X_te)
 
     # 2. calibrator -- fit on the calibration slice only, never on test
-    print("calibrating (isotonic on the calibration slice) ...")
-    iso = IsotonicRegression(out_of_bounds="clip")
-    iso.fit(raw_ca, y_ca)
-    cal_te = iso.predict(raw_te)
+    print(f"calibrating ({calibrate.DEFAULT_CALIBRATOR} on the calibration slice) ...")
+    cal_te = calibrate.fit_calibrator(raw_ca, y_ca)(raw_te)
 
     # reliability measured on TEST -- fitting and validating on the same slice
     # would prove nothing
-    def reliability(p):
-        frac_pos, mean_pred = calibration_curve(y_te, p, n_bins=10, strategy="quantile")
-        return float(np.mean(np.abs(frac_pos - mean_pred)))
-
-    ece_raw, ece_cal = reliability(raw_te), reliability(cal_te)
+    ece_raw = calibrate.ece(y_te, raw_te)
+    ece_cal = calibrate.ece(y_te, cal_te)
 
     # 3. policy comparison
     print("sweeping thresholds ...")
