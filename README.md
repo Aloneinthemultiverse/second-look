@@ -163,12 +163,35 @@ LLMs in Fraud Detection and Trust-and-Safety Workflows* (arXiv:2607.13078, 2026)
 
 Four of five. The fifth is deliberately out of scope under the competition rules.
 
-## Benchmark context
+## Benchmark context, and the fusion test
 
 Combinatorial Fusion Analysis reports **ROC-AUC 0.9405** on IEEE-CIS
-(arXiv:2606.10393, 2026) by fusing Random Forest, XGBoost and LightGBM.
+(arXiv:2606.10393, 2026) by fusing Random Forest, XGBoost and LightGBM. We
+reproduced that method on our own constrained setup (`fusion.py`) to find out
+whether our gap was the feature restriction or the single-model choice:
 
-This project reaches **0.8870**. The difference is explained, not excused:
+| model | ROC-AUC | PR-AUC | card P@10 | rupee loss | vs LightGBM |
+|---|---|---|---|---|---|
+| LightGBM | 0.8870 | 0.5095 | 0.919 | 44,124,593 | — |
+| XGBoost | 0.8864 | 0.4990 | 0.921 | 44,761,738 | −637,146 |
+| RandomForest | 0.8857 | 0.4891 | 0.919 | 43,291,465 | **+833,128** |
+| **fusion (average score)** | **0.8988** | **0.5258** | **0.929** | **43,236,713** | **+887,879** |
+| fusion (diversity-weighted) | 0.8976 | 0.5250 | 0.929 | 43,470,134 | +654,459 |
+
+Three results worth stating:
+
+1. **Fusion is the largest single improvement in this project — Rs 887,879**, bigger
+   than the per-instance threshold gain (Rs 384,567). Simple score averaging beat the
+   paper's diversity weighting.
+2. **RandomForest has the worst ROC-AUC of the three single models and the best rupee
+   loss.** The model that ranks worst loses least money — this project's central claim,
+   arrived at accidentally.
+3. **It quantifies the SOTA gap.** 0.9405 − 0.8870 = 0.0535, of which fusion recovers
+   0.0118. So roughly **78% of the gap is the online-feature restriction**, not the
+   single-model choice. Adopting fusion costs ~3× inference (about 21 ms p50), which
+   still fits a 50 ms budget but consumes most of it.
+
+This project reaches **0.8870** single-model, **0.8988** fused. The difference is explained, not excused:
 that work fuses three models over all 394 features; this uses a single model over
 the 77 features computable inside a checkout latency budget, on a temporal split,
 with no hyperparameter tuning. `restriction_cost.py` measures what the feature
