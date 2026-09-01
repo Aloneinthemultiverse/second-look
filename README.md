@@ -112,6 +112,37 @@ Isotonic tied 41,367. The mechanism holds, the wording was wrong.
 
 ---
 
+## Shipped configuration
+
+What this project actually recommends deploying, and what it does not.
+
+**IN — verified across 3 seeds**
+
+| Component | Why |
+|---|---|
+| Ensemble of LightGBM + XGBoost + RandomForest, simple score averaging | +Rs 1,178,231 (range 800,543-1,415,634), positive in 3/3 seeds. Plain averaging beat the paper's diversity weighting. |
+| Platt calibration on a temporal calibration slice | Required before any cost arithmetic; preserves ranking, unlike isotonic |
+| Per-instance threshold τ\*(x) = C_FP/(C_FP+C_FN) | +Rs 384,567, closed form, no fitting |
+| Three-way ALLOW / REVIEW / BLOCK bounded by analyst capacity | Review is worth Rs 14,221/case at k=10 |
+| TreeSHAP → analyst brief on review-band cases | Legibility under an alert budget. Adds no detection signal, and is not claimed to. |
+
+**OUT — tested and rejected**
+
+| Component | Why not |
+|---|---|
+| Unsupervised outlier layer (IsolationForest blend) | Gain not robust (1/3 seeds, mean negative); consistently worsens value-recall |
+| Cost-proportionate training weights | Value-recall 0.392 → 0.377 |
+| Segmented high-amount model | Value-recall 0.392 → 0.363 |
+| Isotonic calibration | Collapses 111,512 score levels to 167; −0.021 PR-AUC |
+| STEP_UP as a fourth action | No defensible friction cost for this dataset |
+
+**Cost of the ensemble:** roughly 3× inference, about 21 ms p50 against a 50 ms
+budget. Affordable, but it consumes 42% of the budget rather than 14%. A
+latency-constrained deployment should ship the single LightGBM and accept the
+Rs 1.18M.
+
+---
+
 ## Architecture
 
 ```
