@@ -40,13 +40,23 @@ NUMERIC = ["txn_1h", "txn_24h", "amt_24h", "card_seen", "device_txns",
 
 
 def playbook_frame(pb: Playbook, df: pd.DataFrame) -> pd.DataFrame:
+    """Playbook features, keeping missingness as information.
+
+    An earlier version median-imputed every NaN. That was wrong: a NaN in
+    device_txns means "device never seen before", which is itself one of the
+    strongest signals available. Imputing it away deleted the thing the lookup
+    exists to surface. Missing values are now kept as NaN (LightGBM splits on
+    them natively) and an explicit indicator column is added alongside.
+    """
     rows = [pb.run(r) for _, r in df.iterrows()]
     out = pd.DataFrame(rows)
     for c in NUMERIC:
         if c not in out:
             out[c] = np.nan
     out = out[NUMERIC].astype(float)
-    return out.fillna(out.median(numeric_only=True)).fillna(0.0)
+    for c in NUMERIC:
+        out[f"{c}__missing"] = out[c].isna().astype(int)
+    return out
 
 
 def main() -> None:
@@ -81,9 +91,18 @@ def main() -> None:
     sb_ca, sb_te = p_ca[band_ca], p_te[band_te]
 
     def scores(name, tr_X, te_X):
-        m = make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000))
-        m.fit(tr_X, yb_ca)
-        pr = m.predict_proba(te_X)[:, 1]
+        """Small gradient booster, not logistic regression.
+
+        Velocity counts and z-scores do not relate to fraud linearly, and the
+        band is small (1,198 calibration cases), so the model is deliberately
+        tiny to limit overfitting.
+        """
+        m = lgb.LGBMClassifier(n_estimators=120, num_leaves=8,
+                               min_child_samples=40, learning_rate=0.05,
+                               subsample=0.8, colsample_bytree=0.8,
+                               random_state=config.SEED, verbose=-1)
+        m.fit(np.asarray(tr_X, dtype=float), yb_ca)
+        pr = m.predict_proba(np.asarray(te_X, dtype=float))[:, 1]
         return {"name": name,
                 "roc_auc": float(roc_auc_score(yb_te, pr)),
                 "pr_auc": float(average_precision_score(yb_te, pr))}

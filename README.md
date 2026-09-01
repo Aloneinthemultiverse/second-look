@@ -67,6 +67,19 @@ IEEE-CIS (3.4% fraud). Does **not** generalise: on ULB (0.13% fraud) two of four
 merchant profiles are told to block nothing at all. It is a base-rate-conditional
 finding, not a law.
 
+**4. The investigation playbook adds no detection signal.** Measured, not assumed:
+inside the review band, the model score alone ranks better (ROC-AUC 0.6735) than
+score plus the five playbook lookups (0.6401). The booster already consumes the
+count signals, device and email fields the playbook recomputes.
+
+My first version of that experiment was broken — it median-imputed missing values,
+deleting the fact that "device never seen before" is itself a signal, and used a
+linear model on non-linear features. Fixing both lifted playbook-only from 0.4485
+(below random) to 0.5621, and the conclusion held regardless. The layer's value is
+legibility for an analyst under a budget, not detection, and that is now measured
+rather than asserted. Whether an analyst *decides* better with a brief needs human
+subjects and is not claimed here.
+
 I also claimed Platt calibration "provably preserves ranking exactly." In exact
 arithmetic yes; in floating point, saturation tied 21 of 41,390 scores on ULB.
 Isotonic tied 41,367. The mechanism holds, the wording was wrong.
