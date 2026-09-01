@@ -120,8 +120,7 @@ def main() -> None:
     print(f"ULB      ordering (least -> most blocking): {' < '.join(order2)}")
     agree = order1 == order2
     print(f"\nordering replicates: {'YES' if agree else 'NO'}")
-    print("Block-rate ratios are omitted where an archetype optimally blocks
-"
+    print("Block-rate ratios are omitted where an archetype optimally blocks "
           "nothing -- the ratio is undefined, not infinite.")
     print("=" * w)
 
