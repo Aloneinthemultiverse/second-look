@@ -49,7 +49,7 @@ stream — work no analyst team will ever do. Under a realistic alert budget
 
 ## What I got wrong
 
-This section is first on purpose. Four claims did not survive checking.
+This section is first on purpose. Five claims did not survive checking.
 
 **1. "Optimising F1 instead of rupees costs ₹964,857." — Dead.**
 Ran three seeds and three split points. The gap ranged from ₹0 to ₹710,488 —
@@ -79,6 +79,20 @@ linear model on non-linear features. Fixing both lifted playbook-only from 0.448
 legibility for an analyst under a budget, not detection, and that is now measured
 rather than asserted. Whether an analyst *decides* better with a brief needs human
 subjects and is not claimed here.
+
+**5. "The model is weak on high-value fraud" — I measured that against the wrong
+policy.** The audit reported caught fraud averaging Rs 11,062 against missed
+Rs 14,899, a Rs 3,837 gap. But the audit used a *global* threshold, while the
+shipped policy uses per-instance thresholds tau*(x) from Elkan/Bahnsen, which
+block more readily on large amounts by construction. Re-measured correctly the
+gap is **Rs 1,124** — 71% smaller — and value-recall is 39.2%, not 36.9%.
+
+I then tried two documented remedies anyway (`high_value.py`): cost-proportionate
+weighting with recalibration (Zadrozny et al. 2003) and a dedicated high-amount
+model. **Both made things worse** on value-recall and rupee loss. Cost-weighting
+did narrow the caught/missed gap furthest (Rs 587), confirming it redirects
+attention to expensive fraud as advertised — it just costs more discrimination
+(precision 0.608 -> 0.588) than the rebalancing is worth. Baseline retained.
 
 I also claimed Platt calibration "provably preserves ranking exactly." In exact
 arithmetic yes; in floating point, saturation tied 21 of 41,390 scores on ULB.
