@@ -1,0 +1,35 @@
+{
+  "high_value_quantile": 0.75,
+  "results": {
+    "A baseline": {
+      "recall_count": 0.41289370078740156,
+      "recall_value": 0.39225410159561824,
+      "recall_value_high": 0.39316562704289687,
+      "precision": 0.6081913736861182,
+      "block_rate": 0.023359777832341312,
+      "mean_missed_fraud_inr": 13671.53730427494,
+      "mean_caught_fraud_inr": 12547.040262216924,
+      "rupee_loss": 44124592.614
+    },
+    "B cost-weighted+calib": {
+      "recall_count": 0.38804133858267714,
+      "recall_value": 0.37748291481658774,
+      "recall_value_high": 0.38042315347350636,
+      "precision": 0.58777487886694,
+      "block_rate": 0.02271630443065304,
+      "mean_missed_fraud_inr": 13435.110558906314,
+      "mean_caught_fraud_inr": 12847.876733037414,
+      "rupee_loss": 45181864.192
+    },
+    "C segmented": {
+      "recall_count": 0.4028051181102362,
+      "recall_value": 0.3628437799573231,
+      "recall_value_high": 0.35864823913805266,
+      "precision": 0.6033910799852562,
+      "block_rate": 0.0229703070892142,
+      "mean_missed_fraud_inr": 14091.002936959212,
+      "mean_caught_fraud_inr": 11896.980720830787,
+      "rupee_loss": 44926180.672000006
+    }
+  }
+}

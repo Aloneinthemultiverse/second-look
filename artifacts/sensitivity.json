@@ -1,0 +1,110 @@
+{
+  "one_at_a_time": [
+    {
+      "scenario": "margin -30%",
+      "threshold": 0.29827003487974274,
+      "loss": 42517906.400199994,
+      "precision": 0.6024217961654894,
+      "recall": 0.4406988188976378,
+      "blocked_rate": 0.025171663463410918
+    },
+    {
+      "scenario": "margin base",
+      "threshold": 0.29827003487974274,
+      "loss": 43796013.646,
+      "precision": 0.6024217961654894,
+      "recall": 0.4406988188976378,
+      "blocked_rate": 0.025171663463410918
+    },
+    {
+      "scenario": "margin +30%",
+      "threshold": 0.3415784107440005,
+      "loss": 45062812.9868,
+      "precision": 0.6401345291479821,
+      "recall": 0.421505905511811,
+      "blocked_rate": 0.022657037143655436
+    },
+    {
+      "scenario": "LTV -30%",
+      "threshold": 0.29827003487974274,
+      "loss": 42909513.646,
+      "precision": 0.6024217961654894,
+      "recall": 0.4406988188976378,
+      "blocked_rate": 0.025171663463410918
+    },
+    {
+      "scenario": "LTV base",
+      "threshold": 0.29827003487974274,
+      "loss": 43796013.646,
+      "precision": 0.6024217961654894,
+      "recall": 0.4406988188976378,
+      "blocked_rate": 0.025171663463410918
+    },
+    {
+      "scenario": "LTV +30%",
+      "threshold": 0.29827003487974274,
+      "loss": 44682513.646,
+      "precision": 0.6024217961654894,
+      "recall": 0.4406988188976378,
+      "blocked_rate": 0.025171663463410918
+    },
+    {
+      "scenario": "chargeback fee -30%",
+      "threshold": 0.29827003487974274,
+      "loss": 42977733.646,
+      "precision": 0.6024217961654894,
+      "recall": 0.4406988188976378,
+      "blocked_rate": 0.025171663463410918
+    },
+    {
+      "scenario": "chargeback fee base",
+      "threshold": 0.29827003487974274,
+      "loss": 43796013.646,
+      "precision": 0.6024217961654894,
+      "recall": 0.4406988188976378,
+      "blocked_rate": 0.025171663463410918
+    },
+    {
+      "scenario": "chargeback fee +30%",
+      "threshold": 0.29827003487974274,
+      "loss": 44614293.646,
+      "precision": 0.6024217961654894,
+      "recall": 0.4406988188976378,
+      "blocked_rate": 0.025171663463410918
+    }
+  ],
+  "archetypes": [
+    {
+      "merchant": "discount retail  (low LTV, thin margin)",
+      "threshold": 0.11414417779684044,
+      "loss": 36082983.51136,
+      "precision": 0.3785129275734704,
+      "recall": 0.5799704724409449,
+      "blocked_rate": 0.05272248516201136
+    },
+    {
+      "merchant": "mid D2C          (base assumptions)",
+      "threshold": 0.29827003487974274,
+      "loss": 43796013.646,
+      "precision": 0.6024217961654894,
+      "recall": 0.4406988188976378,
+      "blocked_rate": 0.025171663463410918
+    },
+    {
+      "merchant": "subscription SaaS (high LTV, fat margin)",
+      "threshold": 0.7918627580482055,
+      "loss": 52926270.0896,
+      "precision": 0.8369565217391305,
+      "recall": 0.24630905511811024,
+      "blocked_rate": 0.010126239321304896
+    },
+    {
+      "merchant": "high-ticket electronics (large amounts)",
+      "threshold": 0.11081222174827784,
+      "loss": 38812147.02847999,
+      "precision": 0.37270588235294116,
+      "recall": 0.5846456692913385,
+      "blocked_rate": 0.053975564944246414
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "online only (production-feasible)": {
+    "n_features": 77,
+    "pr_auc": 0.4880861000808352,
+    "threshold": 0.34962406015037595,
+    "rupee_loss": 43985089.956,
+    "precision": 0.5825366475462078,
+    "recall": 0.4498031496062992,
+    "blocked_rate": 0.026568678085497295
+  },
+  "online + V_* (offline aggregates)": {
+    "n_features": 416,
+    "pr_auc": 0.5192394360000286,
+    "threshold": 0.5333333333333333,
+    "rupee_loss": 42889546.062,
+    "precision": 0.7109851787271142,
+    "recall": 0.4013287401574803,
+    "blocked_rate": 0.019422736624643337
+  }
+}

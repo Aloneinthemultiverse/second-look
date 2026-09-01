@@ -1,0 +1,50 @@
+{
+  "isolation_forest_auc": 0.7095415674604202,
+  "results": {
+    "supervised only (LGB)": {
+      "roc_auc": 0.8870356875808452,
+      "pr_auc": 0.5095062167196207,
+      "recall_count": 0.41289370078740156,
+      "recall_value": 0.39225410159561824,
+      "recall_value_high": 0.39316562704289687,
+      "fpr": 0.009478714542505151,
+      "rupee_loss": 44124592.614
+    },
+    "supervised fusion (3)": {
+      "roc_auc": 0.8987948652590168,
+      "pr_auc": 0.5257752080811169,
+      "recall_count": 0.43503937007874016,
+      "recall_value": 0.4030748549299575,
+      "recall_value_high": 0.4011964583223492,
+      "fpr": 0.009355955982287693,
+      "rupee_loss": 43236713.269999996
+    },
+    "isolation forest only": {
+      "roc_auc": 0.7095415674604202,
+      "pr_auc": 0.07845944210578559,
+      "recall_count": 0.028297244094488187,
+      "recall_value": 0.04117466834987299,
+      "recall_value_high": 0.046691660778420144,
+      "fpr": 0.006567582971634004,
+      "rupee_loss": 60469378.494
+    },
+    "fusion + 10% anomaly": {
+      "roc_auc": 0.8883678540001649,
+      "pr_auc": 0.5160085861938611,
+      "recall_count": 0.4313484251968504,
+      "recall_value": 0.3869852836092834,
+      "recall_value_high": 0.3813398501744014,
+      "fpr": 0.008645710026743829,
+      "rupee_loss": 42902542.32
+    },
+    "fusion + 25% anomaly": {
+      "roc_auc": 0.8642313518147795,
+      "pr_auc": 0.48126761293521664,
+      "recall_count": 0.40428149606299213,
+      "recall_value": 0.3576900333743467,
+      "recall_value_high": 0.34996595371117367,
+      "fpr": 0.008663246963917752,
+      "rupee_loss": 44099481.97
+    }
+  }
+}

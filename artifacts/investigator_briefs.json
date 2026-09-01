@@ -1,0 +1,1310 @@
+{
+  "review_band": [
+    0.2,
+    0.8
+  ],
+  "band_size": 2828,
+  "band_fraud_rate": 0.36916548797736914,
+  "briefs": [
+    {
+      "row": 108987,
+      "probability": 0.23370438345242803,
+      "amount_inr": 280104.0,
+      "actual_is_fraud": 0,
+      "top_signals": [
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 280,104",
+          "contribution": 0.6792428663186924,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "1.0",
+          "contribution": 0.6730460583857288,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C6",
+          "label": "address/phone count signal C6",
+          "value": "3.0",
+          "contribution": 0.5484736729410472,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "dist1",
+          "label": "billing/shipping distance",
+          "value": "487.0",
+          "contribution": 0.46876732395463366,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.3795163185264467,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "M4",
+          "label": "match flag M4",
+          "value": "M0",
+          "contribution": 0.28901539213330296,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 23.4% on a Rs 280,104 transaction. Raising risk: transaction amount = Rs 280,104, address/phone count signal C13 = 1.0, address/phone count signal C6 = 3.0. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 3927,
+      "probability": 0.49909403566295407,
+      "amount_inr": 254408.0,
+      "actual_is_fraud": 0,
+      "top_signals": [
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 254,408",
+          "contribution": 1.0362377301474017,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card6",
+          "label": "card type (credit/debit)",
+          "value": "credit",
+          "contribution": 0.6919484304390439,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.5120201745636286,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "1.0",
+          "contribution": 0.46179023148949616,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card4",
+          "label": "card network",
+          "value": "discover",
+          "contribution": 0.4252050968800647,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "M4",
+          "label": "match flag M4",
+          "value": "M0",
+          "contribution": 0.4066257169495526,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 49.9% on a Rs 254,408 transaction. Raising risk: transaction amount = Rs 254,408, card type (credit/debit) = credit, address/phone count signal C5 = 0.0. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 89995,
+      "probability": 0.3167569344970603,
+      "amount_inr": 218328.0,
+      "actual_is_fraud": 0,
+      "top_signals": [
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 218,328",
+          "contribution": 0.94171075501738,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card6",
+          "label": "card type (credit/debit)",
+          "value": "credit",
+          "contribution": 0.7661495815077801,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C12",
+          "label": "address/phone count signal C12",
+          "value": "1.0",
+          "contribution": 0.6517743214898658,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "1.0",
+          "contribution": 0.45923251039411767,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.4453579579790498,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C1",
+          "label": "address/phone count signal C1",
+          "value": "2.0",
+          "contribution": -0.3508995874175058,
+          "direction": "lowers risk"
+        }
+      ],
+      "brief": "Scored 31.7% on a Rs 218,328 transaction. Raising risk: transaction amount = Rs 218,328, card type (credit/debit) = credit, address/phone count signal C12 = 1.0. Lowering risk: address/phone count signal C1. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 46680,
+      "probability": 0.5714470684618327,
+      "amount_inr": 190168.0,
+      "actual_is_fraud": 0,
+      "top_signals": [
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "1.0",
+          "contribution": 0.8551792301145333,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card6",
+          "label": "card type (credit/debit)",
+          "value": "credit",
+          "contribution": 0.7509103920523774,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 190,168",
+          "contribution": 0.4507622535120689,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C12",
+          "label": "address/phone count signal C12",
+          "value": "1.0",
+          "contribution": 0.4008556573953853,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "M4",
+          "label": "match flag M4",
+          "value": "M0",
+          "contribution": 0.3986692920491461,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.37516236489717764,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 57.1% on a Rs 190,168 transaction. Raising risk: address/phone count signal C13 = 1.0, card type (credit/debit) = credit, transaction amount = Rs 190,168. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 29042,
+      "probability": 0.2077504269029731,
+      "amount_inr": 190168.0,
+      "actual_is_fraud": 1,
+      "top_signals": [
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 190,168",
+          "contribution": 1.2128088333884497,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C1",
+          "label": "address/phone count signal C1",
+          "value": "5.0",
+          "contribution": 0.7947617793879641,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.4541155292587889,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "M5",
+          "label": "match flag M5",
+          "value": "T",
+          "contribution": 0.32756230236105094,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "M4",
+          "label": "match flag M4",
+          "value": "M0",
+          "contribution": 0.23528519129513267,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card1",
+          "label": "card identifier",
+          "value": "3278",
+          "contribution": 0.2046712572433838,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 20.8% on a Rs 190,168 transaction. Raising risk: transaction amount = Rs 190,168, address/phone count signal C1 = 5.0, address/phone count signal C5 = 0.0. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 79072,
+      "probability": 0.3614112993302004,
+      "amount_inr": 190168.0,
+      "actual_is_fraud": 0,
+      "top_signals": [
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 190,168",
+          "contribution": 0.9342827690510273,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C6",
+          "label": "address/phone count signal C6",
+          "value": "5.0",
+          "contribution": 0.7868901029996359,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "P_emaildomain",
+          "label": "purchaser email domain",
+          "value": null,
+          "contribution": 0.5549887013117848,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.5045091432956736,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "5.0",
+          "contribution": 0.3877183814221222,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "M5",
+          "label": "match flag M5",
+          "value": "T",
+          "contribution": 0.257516886814058,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 36.1% on a Rs 190,168 transaction. Raising risk: transaction amount = Rs 190,168, address/phone count signal C6 = 5.0, purchaser email domain. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 41339,
+      "probability": 0.3878660086664883,
+      "amount_inr": 189200.0,
+      "actual_is_fraud": 0,
+      "top_signals": [
+        {
+          "feature": "card4",
+          "label": "card network",
+          "value": "discover",
+          "contribution": 0.6271908249554997,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card6",
+          "label": "card type (credit/debit)",
+          "value": "credit",
+          "contribution": 0.4846793906115383,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "M5",
+          "label": "match flag M5",
+          "value": "T",
+          "contribution": 0.48436739857830347,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 189,200",
+          "contribution": 0.47555548214328963,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "0.0",
+          "contribution": 0.47096140130927655,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C14",
+          "label": "address/phone count signal C14",
+          "value": "0.0",
+          "contribution": 0.45618121783113424,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 38.8% on a Rs 189,200 transaction. Raising risk: card network = discover, card type (credit/debit) = credit, match flag M5 = T. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 104019,
+      "probability": 0.46259999626719955,
+      "amount_inr": 172568.0,
+      "actual_is_fraud": 0,
+      "top_signals": [
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 172,568",
+          "contribution": 0.9892705768417129,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card6",
+          "label": "card type (credit/debit)",
+          "value": "credit",
+          "contribution": 0.6507720266383757,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card4",
+          "label": "card network",
+          "value": "discover",
+          "contribution": 0.5764809425347887,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.42155138628508576,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "2.0",
+          "contribution": 0.34623946970028185,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "P_emaildomain",
+          "label": "purchaser email domain",
+          "value": "gmail.com",
+          "contribution": 0.27439156780575846,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 46.3% on a Rs 172,568 transaction. Raising risk: transaction amount = Rs 172,568, card type (credit/debit) = credit, card network = discover. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 41710,
+      "probability": 0.41781180450460265,
+      "amount_inr": 151904.72,
+      "actual_is_fraud": 0,
+      "top_signals": [
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "1.0",
+          "contribution": 0.7725134598762942,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 151,905",
+          "contribution": 0.571166967614482,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.45615340795156056,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card6",
+          "label": "card type (credit/debit)",
+          "value": "credit",
+          "contribution": 0.43090255458779847,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card2",
+          "label": "card issuer range",
+          "value": "514.0",
+          "contribution": 0.35918207974253025,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C6",
+          "label": "address/phone count signal C6",
+          "value": "2.0",
+          "contribution": 0.33801750274399334,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 41.8% on a Rs 151,905 transaction. Raising risk: address/phone count signal C13 = 1.0, transaction amount = Rs 151,905, address/phone count signal C5 = 0.0. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 107200,
+      "probability": 0.451149553736802,
+      "amount_inr": 145288.0,
+      "actual_is_fraud": 1,
+      "top_signals": [
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 145,288",
+          "contribution": 0.8776492121084252,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "0.0",
+          "contribution": 0.8686656706723996,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C14",
+          "label": "address/phone count signal C14",
+          "value": "0.0",
+          "contribution": 0.7942022064940207,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C6",
+          "label": "address/phone count signal C6",
+          "value": "5.0",
+          "contribution": 0.5311140778209439,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C2",
+          "label": "address/phone count signal C2",
+          "value": "4.0",
+          "contribution": 0.38829327323708185,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.30790820283119413,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 45.1% on a Rs 145,288 transaction. Raising risk: transaction amount = Rs 145,288, address/phone count signal C13 = 0.0, address/phone count signal C14 = 0.0. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 25285,
+      "probability": 0.30390298370517527,
+      "amount_inr": 145288.0,
+      "actual_is_fraud": 1,
+      "top_signals": [
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "0.0",
+          "contribution": 0.5463384034531565,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card6",
+          "label": "card type (credit/debit)",
+          "value": "credit",
+          "contribution": 0.5327718471743692,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "P_emaildomain",
+          "label": "purchaser email domain",
+          "value": "gmail.com",
+          "contribution": 0.3865252125630246,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.3554728608451251,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "M5",
+          "label": "match flag M5",
+          "value": "T",
+          "contribution": 0.34567526715927677,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C14",
+          "label": "address/phone count signal C14",
+          "value": "0.0",
+          "contribution": 0.3397521420329809,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 30.4% on a Rs 145,288 transaction. Raising risk: address/phone count signal C13 = 0.0, card type (credit/debit) = credit, purchaser email domain = gmail.com. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 41650,
+      "probability": 0.3991804948460435,
+      "amount_inr": 145288.0,
+      "actual_is_fraud": 1,
+      "top_signals": [
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "0.0",
+          "contribution": 0.8852893918009677,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 145,288",
+          "contribution": 0.8237214803450383,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C14",
+          "label": "address/phone count signal C14",
+          "value": "0.0",
+          "contribution": 0.7054028712831995,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C6",
+          "label": "address/phone count signal C6",
+          "value": "4.0",
+          "contribution": 0.4982582148629397,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.37577761245929114,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C2",
+          "label": "address/phone count signal C2",
+          "value": "4.0",
+          "contribution": 0.36829150533607363,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 39.9% on a Rs 145,288 transaction. Raising risk: address/phone count signal C13 = 0.0, transaction amount = Rs 145,288, address/phone count signal C14 = 0.0. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 101748,
+      "probability": 0.6589737071179984,
+      "amount_inr": 145288.0,
+      "actual_is_fraud": 1,
+      "top_signals": [
+        {
+          "feature": "P_emaildomain",
+          "label": "purchaser email domain",
+          "value": "mail.com",
+          "contribution": 1.757219868573475,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 145,288",
+          "contribution": 0.9737277318744215,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card6",
+          "label": "card type (credit/debit)",
+          "value": "credit",
+          "contribution": 0.5990217438899512,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.4577553671015269,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "addr1",
+          "label": "billing region",
+          "value": "126.0",
+          "contribution": 0.3882080055713167,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C12",
+          "label": "address/phone count signal C12",
+          "value": "1.0",
+          "contribution": 0.37786551213754116,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 65.9% on a Rs 145,288 transaction. Raising risk: purchaser email domain = mail.com, transaction amount = Rs 145,288, card type (credit/debit) = credit. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 16281,
+      "probability": 0.5920705545707337,
+      "amount_inr": 145288.0,
+      "actual_is_fraud": 0,
+      "top_signals": [
+        {
+          "feature": "C6",
+          "label": "address/phone count signal C6",
+          "value": "5.0",
+          "contribution": 0.8432499713994853,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "3.0",
+          "contribution": 0.7298689188544102,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.6622182900701582,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "M5",
+          "label": "match flag M5",
+          "value": "T",
+          "contribution": 0.615189356200034,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C1",
+          "label": "address/phone count signal C1",
+          "value": "5.0",
+          "contribution": 0.5967348995991864,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card6",
+          "label": "card type (credit/debit)",
+          "value": "credit",
+          "contribution": 0.39536898573707857,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 59.2% on a Rs 145,288 transaction. Raising risk: address/phone count signal C6 = 5.0, address/phone count signal C13 = 3.0, address/phone count signal C5 = 0.0. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 16291,
+      "probability": 0.2077724340790958,
+      "amount_inr": 145288.0,
+      "actual_is_fraud": 0,
+      "top_signals": [
+        {
+          "feature": "P_emaildomain",
+          "label": "purchaser email domain",
+          "value": null,
+          "contribution": 0.7073846110241875,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 145,288",
+          "contribution": 0.544414523311833,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "2.0",
+          "contribution": 0.42212614966095774,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.41098197105553663,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C12",
+          "label": "address/phone count signal C12",
+          "value": "1.0",
+          "contribution": 0.32423963396326017,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "M4",
+          "label": "match flag M4",
+          "value": "M0",
+          "contribution": 0.306632555278564,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 20.8% on a Rs 145,288 transaction. Raising risk: purchaser email domain, transaction amount = Rs 145,288, address/phone count signal C13 = 2.0. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 54230,
+      "probability": 0.25131936379382785,
+      "amount_inr": 140800.0,
+      "actual_is_fraud": 0,
+      "top_signals": [
+        {
+          "feature": "C1",
+          "label": "address/phone count signal C1",
+          "value": "6.0",
+          "contribution": 1.9015315685676857,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "ProductCD",
+          "label": "product category",
+          "value": "R",
+          "contribution": -0.8681519739062572,
+          "direction": "lowers risk"
+        },
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 140,800",
+          "contribution": 0.6146583276156035,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "R_emaildomain",
+          "label": "recipient email domain",
+          "value": "gmail.com",
+          "contribution": 0.6028200443905162,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "1.0",
+          "contribution": 0.5798890783721515,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C2",
+          "label": "address/phone count signal C2",
+          "value": "4.0",
+          "contribution": 0.5724329915625495,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 25.1% on a Rs 140,800 transaction. Raising risk: address/phone count signal C1 = 6.0, transaction amount = Rs 140,800, recipient email domain = gmail.com. Lowering risk: product category. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 75309,
+      "probability": 0.7452337617632766,
+      "amount_inr": 126368.0,
+      "actual_is_fraud": 0,
+      "top_signals": [
+        {
+          "feature": "C6",
+          "label": "address/phone count signal C6",
+          "value": "5.0",
+          "contribution": 1.0388970698001336,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "2.0",
+          "contribution": 0.9712293520393334,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 126,368",
+          "contribution": 0.9548617016246378,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.46503725114776556,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card6",
+          "label": "card type (credit/debit)",
+          "value": "credit",
+          "contribution": 0.43014941736657636,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card2",
+          "label": "card issuer range",
+          "value": "553.0",
+          "contribution": 0.4232570302256409,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 74.5% on a Rs 126,368 transaction. Raising risk: address/phone count signal C6 = 5.0, address/phone count signal C13 = 2.0, transaction amount = Rs 126,368. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 114103,
+      "probability": 0.20969926829063754,
+      "amount_inr": 126368.0,
+      "actual_is_fraud": 1,
+      "top_signals": [
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 126,368",
+          "contribution": 0.9787823358986839,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card6",
+          "label": "card type (credit/debit)",
+          "value": "credit",
+          "contribution": 0.723211180588937,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card2",
+          "label": "card issuer range",
+          "value": "512.0",
+          "contribution": 0.4211746229112256,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.4196644420647536,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "P_emaildomain",
+          "label": "purchaser email domain",
+          "value": "gmail.com",
+          "contribution": 0.4053789197211585,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "M4",
+          "label": "match flag M4",
+          "value": "M0",
+          "contribution": 0.3943315836555087,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 21.0% on a Rs 126,368 transaction. Raising risk: transaction amount = Rs 126,368, card type (credit/debit) = credit, card issuer range = 512.0. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 54353,
+      "probability": 0.507266853491234,
+      "amount_inr": 117128.0,
+      "actual_is_fraud": 1,
+      "top_signals": [
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 117,128",
+          "contribution": 1.1194912618160573,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "0.0",
+          "contribution": 0.9270200209996032,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C14",
+          "label": "address/phone count signal C14",
+          "value": "0.0",
+          "contribution": 0.8116228394509423,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C6",
+          "label": "address/phone count signal C6",
+          "value": "5.0",
+          "contribution": 0.5146528659930648,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C2",
+          "label": "address/phone count signal C2",
+          "value": "4.0",
+          "contribution": 0.3452752102956241,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.2785662850858154,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 50.7% on a Rs 117,128 transaction. Raising risk: transaction amount = Rs 117,128, address/phone count signal C13 = 0.0, address/phone count signal C14 = 0.0. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 3571,
+      "probability": 0.22267102737634847,
+      "amount_inr": 117128.0,
+      "actual_is_fraud": 0,
+      "top_signals": [
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 117,128",
+          "contribution": 0.8556266052790332,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card6",
+          "label": "card type (credit/debit)",
+          "value": "credit",
+          "contribution": 0.612408491985313,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "1.0",
+          "contribution": 0.3832516355560988,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card2",
+          "label": "card issuer range",
+          "value": "514.0",
+          "contribution": 0.3623946314294656,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "P_emaildomain",
+          "label": "purchaser email domain",
+          "value": "gmail.com",
+          "contribution": 0.35972277976163464,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.30931828188064225,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 22.3% on a Rs 117,128 transaction. Raising risk: transaction amount = Rs 117,128, card type (credit/debit) = credit, address/phone count signal C13 = 1.0. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 57007,
+      "probability": 0.507266853491234,
+      "amount_inr": 117128.0,
+      "actual_is_fraud": 1,
+      "top_signals": [
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 117,128",
+          "contribution": 1.1194912618160573,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "0.0",
+          "contribution": 0.9270200209996032,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C14",
+          "label": "address/phone count signal C14",
+          "value": "0.0",
+          "contribution": 0.8116228394509423,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C6",
+          "label": "address/phone count signal C6",
+          "value": "5.0",
+          "contribution": 0.5146528659930648,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C2",
+          "label": "address/phone count signal C2",
+          "value": "4.0",
+          "contribution": 0.3452752102956241,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.2785662850858154,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 50.7% on a Rs 117,128 transaction. Raising risk: transaction amount = Rs 117,128, address/phone count signal C13 = 0.0, address/phone count signal C14 = 0.0. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 6161,
+      "probability": 0.507266853491234,
+      "amount_inr": 117128.0,
+      "actual_is_fraud": 1,
+      "top_signals": [
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 117,128",
+          "contribution": 1.1087006113282205,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "0.0",
+          "contribution": 0.9442608669134059,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C14",
+          "label": "address/phone count signal C14",
+          "value": "0.0",
+          "contribution": 0.8256277469931265,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C6",
+          "label": "address/phone count signal C6",
+          "value": "4.0",
+          "contribution": 0.49109178005110166,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C2",
+          "label": "address/phone count signal C2",
+          "value": "4.0",
+          "contribution": 0.3565271590362248,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "M4",
+          "label": "match flag M4",
+          "value": "M0",
+          "contribution": 0.27482355169514944,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 50.7% on a Rs 117,128 transaction. Raising risk: transaction amount = Rs 117,128, address/phone count signal C13 = 0.0, address/phone count signal C14 = 0.0. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 75315,
+      "probability": 0.5636360604865078,
+      "amount_inr": 117128.0,
+      "actual_is_fraud": 0,
+      "top_signals": [
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 117,128",
+          "contribution": 0.9991916415428967,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C6",
+          "label": "address/phone count signal C6",
+          "value": "5.0",
+          "contribution": 0.9828773046094843,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "3.0",
+          "contribution": 0.7693430860921874,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.5096349339371431,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card2",
+          "label": "card issuer range",
+          "value": "553.0",
+          "contribution": 0.42933126049733683,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card6",
+          "label": "card type (credit/debit)",
+          "value": "credit",
+          "contribution": 0.38996057426633157,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 56.4% on a Rs 117,128 transaction. Raising risk: transaction amount = Rs 117,128, address/phone count signal C6 = 5.0, address/phone count signal C13 = 3.0. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 85070,
+      "probability": 0.2978742889925823,
+      "amount_inr": 117128.0,
+      "actual_is_fraud": 0,
+      "top_signals": [
+        {
+          "feature": "card6",
+          "label": "card type (credit/debit)",
+          "value": "credit",
+          "contribution": 0.6496215025970562,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 117,128",
+          "contribution": 0.5306127226809242,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "1.0",
+          "contribution": 0.5208299867106506,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.49312670348885207,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "M4",
+          "label": "match flag M4",
+          "value": "M0",
+          "contribution": 0.3221495525185309,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C1",
+          "label": "address/phone count signal C1",
+          "value": "2.0",
+          "contribution": -0.23736989059028146,
+          "direction": "lowers risk"
+        }
+      ],
+      "brief": "Scored 29.8% on a Rs 117,128 transaction. Raising risk: card type (credit/debit) = credit, transaction amount = Rs 117,128, address/phone count signal C13 = 1.0. Lowering risk: address/phone count signal C1. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    },
+    {
+      "row": 116968,
+      "probability": 0.2341799237383163,
+      "amount_inr": 114928.0,
+      "actual_is_fraud": 0,
+      "top_signals": [
+        {
+          "feature": "TransactionAmt",
+          "label": "transaction amount",
+          "value": "Rs 114,928",
+          "contribution": 0.9338322164211535,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "card6",
+          "label": "card type (credit/debit)",
+          "value": "credit",
+          "contribution": 0.5521348986047211,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C13",
+          "label": "address/phone count signal C13",
+          "value": "1.0",
+          "contribution": 0.5014822642577111,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "M4",
+          "label": "match flag M4",
+          "value": "M0",
+          "contribution": 0.3353234145950182,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "C5",
+          "label": "address/phone count signal C5",
+          "value": "0.0",
+          "contribution": 0.30652745150927957,
+          "direction": "raises risk"
+        },
+        {
+          "feature": "P_emaildomain",
+          "label": "purchaser email domain",
+          "value": "gmail.com",
+          "contribution": 0.28410836697426145,
+          "direction": "raises risk"
+        }
+      ],
+      "brief": "Scored 23.4% on a Rs 114,928 transaction. Raising risk: transaction amount = Rs 114,928, card type (credit/debit) = credit, address/phone count signal C13 = 1.0. Model is uncertain; analyst judgement required.",
+      "source": "template"
+    }
+  ]
+}

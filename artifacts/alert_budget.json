@@ -1,0 +1,46 @@
+{
+  "days": 42,
+  "baseline_precision": 0.034408893479751755,
+  "budgets": [
+    {
+      "k": 10,
+      "txn_precision_at_k": 0.8952380952380953,
+      "card_precision_at_k": 0.919047619047619,
+      "txn_recall": 0.09251968503937008,
+      "card_recall": 0.1687062937062937,
+      "alerts_worked": 420
+    },
+    {
+      "k": 25,
+      "txn_precision_at_k": 0.8104761904761905,
+      "card_precision_at_k": 0.8123809523809524,
+      "txn_recall": 0.2093996062992126,
+      "card_recall": 0.3728146853146853,
+      "alerts_worked": 1050
+    },
+    {
+      "k": 50,
+      "txn_precision_at_k": 0.6823809523809524,
+      "card_precision_at_k": 0.6209523809523809,
+      "txn_recall": 0.3526082677165354,
+      "card_recall": 0.5699300699300699,
+      "alerts_worked": 2100
+    },
+    {
+      "k": 100,
+      "txn_precision_at_k": 0.4911904761904762,
+      "card_precision_at_k": 0.3923809523809524,
+      "txn_recall": 0.5076279527559056,
+      "card_recall": 0.7202797202797203,
+      "alerts_worked": 4200
+    },
+    {
+      "k": 200,
+      "txn_precision_at_k": 0.3053571428571429,
+      "card_precision_at_k": 0.2325,
+      "txn_recall": 0.6311515748031497,
+      "card_recall": 0.853583916083916,
+      "alerts_worked": 8400
+    }
+  ]
+}

@@ -1,5 +1,15 @@
+# Raw datasets -- fetched via fetch_data.py, far too large for git
 data/
-artifacts/
+
+# Regenerable binaries: saved model, cached score arrays
+artifacts/*.txt
+artifacts/*.npy
+artifacts/*.npz
+
+# Results JSON, figures and the feature audit ARE tracked: they are the
+# evidence behind every number in the README, and a reviewer should not have
+# to run a 20-minute pipeline to check a claim.
+
 __pycache__/
 *.pyc
 .env

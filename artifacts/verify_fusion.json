@@ -1,0 +1,70 @@
+{
+  "seeds": [
+    {
+      "seed": 42,
+      "lightgbm": {
+        "roc_auc": 0.8879676534559676,
+        "pr_auc": 0.5097283516731818,
+        "rupee_loss": 44520650.304
+      },
+      "randomforest": {
+        "roc_auc": 0.8856826895758443,
+        "pr_auc": 0.4890604108908634,
+        "rupee_loss": 43291464.97
+      },
+      "fusion": {
+        "roc_auc": 0.898958554486884,
+        "pr_auc": 0.5253264620519341,
+        "rupee_loss": 43105016.01200001
+      },
+      "gain_fusion": 1415634.2919999883,
+      "gain_rf": 1229185.3339999989,
+      "auc_gain": 0.010990901030916378
+    },
+    {
+      "seed": 7,
+      "lightgbm": {
+        "roc_auc": 0.8896522242825823,
+        "pr_auc": 0.5116125723770648,
+        "rupee_loss": 43572559.04000001
+      },
+      "randomforest": {
+        "roc_auc": 0.8844009591116643,
+        "pr_auc": 0.48732603668115243,
+        "rupee_loss": 43706700.904
+      },
+      "fusion": {
+        "roc_auc": 0.8986237938177464,
+        "pr_auc": 0.5259882797806181,
+        "rupee_loss": 42772015.796
+      },
+      "gain_fusion": 800543.2440000102,
+      "gain_rf": -134141.8639999926,
+      "auc_gain": 0.008971569535164092
+    },
+    {
+      "seed": 2024,
+      "lightgbm": {
+        "roc_auc": 0.8878572848885801,
+        "pr_auc": 0.5061086919077917,
+        "rupee_loss": 44600327.086
+      },
+      "randomforest": {
+        "roc_auc": 0.8830653124906144,
+        "pr_auc": 0.4899345743850895,
+        "rupee_loss": 43468539.494
+      },
+      "fusion": {
+        "roc_auc": 0.897536071115042,
+        "pr_auc": 0.5242447172100377,
+        "rupee_loss": 43281813.092
+      },
+      "gain_fusion": 1318513.9940000027,
+      "gain_rf": 1131787.5920000002,
+      "auc_gain": 0.0096787862264619
+    }
+  ],
+  "mean_gain": 1178230.5100000005,
+  "sd_gain": 330671.80291765434,
+  "verdict": "ROBUST: gain is positive in every seed and the spread is well under the mean. The fusion result stands."
+}

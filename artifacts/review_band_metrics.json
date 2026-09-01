@@ -1,0 +1,27 @@
+{
+  "band": [
+    0.2,
+    0.8
+  ],
+  "n_calib": 1198,
+  "n_test": 2828,
+  "band_fraud_rate_test": 0.36916548797736914,
+  "results": [
+    {
+      "name": "model score alone",
+      "roc_auc": 0.6735039967871073,
+      "pr_auc": 0.5488432201504005
+    },
+    {
+      "name": "playbook features only",
+      "roc_auc": 0.5621002675978901,
+      "pr_auc": 0.4548124766035183
+    },
+    {
+      "name": "score + playbook",
+      "roc_auc": 0.6401342606910296,
+      "pr_auc": 0.529500235410646
+    }
+  ],
+  "verdict": "The playbook degrades ranking; use it for presentation only."
+}

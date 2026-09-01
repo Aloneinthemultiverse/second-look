@@ -1,0 +1,70 @@
+{
+  "ieee": {
+    "dataset": "IEEE-CIS",
+    "base_rate": 0.034408893479751755,
+    "archetypes": {
+      "discount retail": {
+        "threshold": 0.12636288470807971,
+        "block_rate": 0.04810810353148363,
+        "recall": 0.5644685039370079,
+        "precision": 0.4037310806054206,
+        "loss": 36009153.19552
+      },
+      "mid D2C": {
+        "threshold": 0.3003105436409628,
+        "block_rate": 0.02506159564470108,
+        "recall": 0.4402066929133858,
+        "precision": 0.6043918918918919,
+        "loss": 43745744.854
+      },
+      "high-ticket": {
+        "threshold": 0.11038338522750643,
+        "block_rate": 0.05411949978409774,
+        "recall": 0.5851377952755905,
+        "precision": 0.37202753441802255,
+        "loss": 38833781.78688
+      },
+      "subscription SaaS": {
+        "threshold": 0.7984310758570867,
+        "block_rate": 0.010033105013165804,
+        "recall": 0.24458661417322836,
+        "precision": 0.8388185654008439,
+        "loss": 52927684.6688
+      }
+    }
+  },
+  "ulb": {
+    "dataset": "ULB",
+    "base_rate": 0.001316667251852112,
+    "archetypes": {
+      "discount retail": {
+        "threshold": 0.42995116110575404,
+        "block_rate": 0.0010182226747656332,
+        "recall": 0.6666666666666666,
+        "precision": 0.8620689655172413,
+        "loss": 623918.436
+      },
+      "mid D2C": {
+        "threshold": 1.01,
+        "block_rate": 0.0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "loss": 824279.7000000001
+      },
+      "high-ticket": {
+        "threshold": 0.42995116110575404,
+        "block_rate": 0.0010182226747656332,
+        "recall": 0.6666666666666666,
+        "precision": 0.8620689655172413,
+        "loss": 576065.1240000001
+      },
+      "subscription SaaS": {
+        "threshold": 1.01,
+        "block_rate": 0.0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "loss": 824279.7000000001
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "sweep": [
+    {
+      "review_cost": 25.0,
+      "n_allow": 37555,
+      "n_review": 80408,
+      "n_block": 146,
+      "review_per_day": 1914.4761904761904,
+      "realised_loss": 3071158.544,
+      "fraud_rate_in_review": 0.046413292209730374
+    },
+    {
+      "review_cost": 50.0,
+      "n_allow": 56444,
+      "n_review": 61408,
+      "n_block": 257,
+      "review_per_day": 1462.095238095238,
+      "realised_loss": 5074906.717999999,
+      "fraud_rate_in_review": 0.05657243355914539
+    },
+    {
+      "review_cost": 150.0,
+      "n_allow": 82125,
+      "n_review": 35506,
+      "n_block": 478,
+      "review_per_day": 845.3809523809524,
+      "realised_loss": 9977290.682,
+      "fraud_rate_in_review": 0.08297189207457895
+    },
+    {
+      "review_cost": 400.0,
+      "n_allow": 98707,
+      "n_review": 18574,
+      "n_block": 828,
+      "review_per_day": 442.23809523809524,
+      "realised_loss": 16174597.758,
+      "fraud_rate_in_review": 0.1188758479595133
+    },
+    {
+      "review_cost": 1000.0,
+      "n_allow": 108157,
+      "n_review": 8669,
+      "n_block": 1283,
+      "review_per_day": 206.4047619047619,
+      "realised_loss": 24519633.442,
+      "fraud_rate_in_review": 0.15307417233821663
+    }
+  ],
+  "default_review_cost": 150.0,
+  "loss_two_way": 44124592.614,
+  "loss_three_way": 9977290.682,
+  "loss_do_nothing": 58551021.568,
+  "overlap_with_arbitrary_band": 0.07964851011096716
+}

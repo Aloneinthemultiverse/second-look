@@ -1,0 +1,33 @@
+{
+  "do_nothing": 58551021.568,
+  "results": {
+    "A0 global (swept on TEST)": {
+      "rupee_loss": 43796013.646,
+      "precision": 0.6024217961654894,
+      "recall": 0.4406988188976378,
+      "block_rate": 0.025171663463410918,
+      "threshold": 0.29827003487974274
+    },
+    "A global (chosen on calib)": {
+      "rupee_loss": 44509159.778000005,
+      "precision": 0.5599527466036621,
+      "recall": 0.46653543307086615,
+      "block_rate": 0.02866843339626955,
+      "threshold": 0.2508953023041657
+    },
+    "B per-instance tau*": {
+      "rupee_loss": 44124592.614,
+      "precision": 0.6081913736861182,
+      "recall": 0.41289370078740156,
+      "block_rate": 0.023359777832341312,
+      "threshold": "0.203-0.671 (per txn)"
+    },
+    "C cost-weighted train": {
+      "rupee_loss": 44016894.066,
+      "precision": 0.6056338028169014,
+      "recall": 0.4126476377952756,
+      "block_rate": 0.023444445385195033,
+      "threshold": 0.32019439020418156
+    }
+  }
+}
