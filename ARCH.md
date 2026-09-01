@@ -1,5 +1,20 @@
 # Second Look — Architecture
 
+> **STATUS: partially superseded. README.md is authoritative.**
+>
+> This document was the plan written on day 1. What actually got built differs,
+> and the differences are deliberate:
+>
+> - The decision layer is no longer a hand-picked band. Thresholds are derived
+>   per transaction from costs (Elkan 2001) and the review band from Chow (1970),
+>   bounded by analyst capacity (Dal Pozzolo et al.). None of that is described below.
+> - Evaluation added Precision@k / Card Precision@k under an alert budget, which
+>   changed what "good" means -- see README.
+> - The investigator layer uses TreeSHAP attributions as its primary evidence.
+>   The five-lookup playbook and entity graph were built too (playbook.py) and
+>   measured (review_band_metrics.py): they add no detection signal, only legibility.
+> - STEP_UP was cut for lack of a defensible friction cost, as noted below.
+
 A fraud triage system for card-not-present e-commerce payments.
 Submission for the **Razorpay AI Buildathon 2026, Track 02 — AI Risk Manager**.
 
