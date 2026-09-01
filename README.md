@@ -49,7 +49,7 @@ stream — work no analyst team will ever do. Under a realistic alert budget
 
 ## What I got wrong
 
-This section is first on purpose. Five claims did not survive checking.
+This section is first on purpose. Seven claims did not survive checking.
 
 **1. "Optimising F1 instead of rupees costs ₹964,857." — Dead.**
 Ran three seeds and three split points. The gap ranged from ₹0 to ₹710,488 —
@@ -93,6 +93,18 @@ model. **Both made things worse** on value-recall and rupee loss. Cost-weighting
 did narrow the caught/missed gap furthest (Rs 587), confirming it redirects
 attention to expensive fraud as advertised — it just costs more discrimination
 (precision 0.608 -> 0.588) than the rebalancing is worth. Baseline retained.
+
+**6. "RandomForest ranks worst but loses least money."** One seed. Across three:
+sd Rs 760,562 against a mean of Rs 742,277, and the sign flips negative. Cut.
+
+**7. "A PayPal-style unsupervised outlier layer saves Rs 334,171."** One seed.
+Across three: +103,635 / -283,176 / -23,569, mean **negative**. Cut. What *is*
+consistent is that it makes value-recall worse in 3/3 seeds (-0.021 average) --
+it reliably hurts the thing it was added to fix.
+
+Findings 1, 6 and 7 share a failure mode: a single run produced an attractive
+number and the spread swamped it. Every headline in this README is now checked
+across seeds before it is written down.
 
 I also claimed Platt calibration "provably preserves ranking exactly." In exact
 arithmetic yes; in floating point, saturation tied 21 of 41,390 scores on ULB.
@@ -162,6 +174,17 @@ LLMs in Fraud Detection and Trust-and-Safety Workflows* (arXiv:2607.13078, 2026)
 | **Adversarial pressure** | ❌ **not evaluated.** Track 02 is strictly defence-only, so no attack generation was built. This is a real gap in deployment evidence, declared rather than glossed. |
 
 Four of five. The fifth is deliberately out of scope under the competition rules.
+
+## Industry context
+
+| Source | Their number | Ours |
+|---|---|---|
+| Adyen 2025 fraud report | **5% of fraud-linked identities = 58% of fraudulent value** | Independent confirmation that fraud loss is value-concentrated, which is why this project reports value-recall alongside count-recall |
+| PayPal | false-positive rate **below 5%** | **0.94%** — five times more conservative about declining genuine customers |
+| Stripe Radar | fraud reduced **32%**, trained on 70 trillion data points | **24.8%** savings, trained on 413k transactions and 77 features |
+
+Not a like-for-like comparison — different metrics, incomparable data scale — but
+it places the results in a real operating range rather than a vacuum.
 
 ## Benchmark context, and the fusion test
 
