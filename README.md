@@ -49,7 +49,7 @@ stream — work no analyst team will ever do. Under a realistic alert budget
 
 ## What I got wrong
 
-This section is first on purpose. Three claims did not survive checking.
+This section is first on purpose. Four claims did not survive checking.
 
 **1. "Optimising F1 instead of rupees costs ₹964,857." — Dead.**
 Ran three seeds and three split points. The gap ranged from ₹0 to ₹710,488 —
