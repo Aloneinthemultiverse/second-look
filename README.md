@@ -402,8 +402,17 @@ Every stage writes JSON to `artifacts/`. All models train with `seed=42`.
 
 Stated plainly, because they affect how the numbers should be read.
 
-- **IEEE-CIS is US card data.** An Indian cost model is applied to it. Disclosed,
-  not hidden.
+- **IEEE-CIS is US card data, and the gap is a THREAT MODEL gap, not just a
+  currency one.** RBI mandates additional-factor authentication on domestic card
+  payments, so the specific fraud this dataset contains -- stolen-card
+  card-not-present checkout -- is structurally suppressed in India. Domestic
+  Indian fraud skews to social engineering: OTP phishing, UPI collect-request
+  scams, refund abuse, account takeover. None of that is in this data.
+  Where the work does transfer: cross-border card payments, where Indian AFA
+  does not apply, and where Razorpay's own Vulcan announcement highlights
+  international card fraud. The decision layer -- calibration, per-instance
+  cost thresholds, alert-budget evaluation -- is threat-model agnostic and
+  applies to any scorer. The detector is not.
 - **The cost parameters are assumptions**, not measurements: ₹2,500 LTV, 25%
   margin, ₹1,200 chargeback fee, USD→INR at 88. `sensitivity.py` varies each ±30%.
 - **The latency figure is model scoring only.** Feature retrieval from a cache is
