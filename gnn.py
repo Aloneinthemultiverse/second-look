@@ -42,6 +42,7 @@ import features
 
 K_NEIGHBOURS = 5          # per relation, per node -- keeps the graph bounded
 RELATIONS = ["card1", "DeviceInfo", "P_emaildomain"]
+MIN_INFO_BITS = 6.0   # -log2 P(value); a value in >1.6% of rows is not evidence
 HIDDEN = 64
 EPOCHS = 60
 LR = 0.01
@@ -79,10 +80,21 @@ def build_edges(df: pd.DataFrame) -> np.ndarray:
     for col in RELATIONS:
         if col not in df.columns:
             continue
-        vals = df[col].to_numpy()
+        # Information-value filter, same rule as playbook.py. P_emaildomain is
+        # the DOMAIN, not the address: gmail.com is 46% of rows and carries 1.37
+        # bits. Linking two strangers because both use Gmail is not an edge, it
+        # is noise fed straight into message passing. An earlier version of this
+        # file omitted the filter and 42% of the graph was email edges.
+        freq = df[col].value_counts(normalize=True)
+        informative = set(freq[freq < 2 ** -MIN_INFO_BITS].index)
+        dropped = len(freq) - len(informative)
+        vals = np.where(df[col].isin(informative).to_numpy(),
+                        df[col].to_numpy(), None)
+        print(f"   {col}: {len(informative):,} informative values, "
+              f"{dropped:,} too common to link on")
         last: dict = {}
         for i, v in enumerate(vals):
-            if pd.isna(v):
+            if v is None or pd.isna(v):
                 continue
             prev = last.get(v)
             if prev:

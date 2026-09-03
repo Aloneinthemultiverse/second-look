@@ -10,18 +10,27 @@
     "rupee_loss": 58551021.568
   },
   "policy_f1_optimal": {
-    "threshold": 0.23374004162366135,
-    "precision": 0.5446403582423733,
-    "recall": 0.47883858267716534,
-    "f1": 0.5096241979835013,
-    "rupee_loss": 44808680.21000001
+    "threshold": 0.2666531209066462,
+    "precision": 0.5735021618282891,
+    "recall": 0.4569389763779528,
+    "f1": 0.5086277732128184,
+    "rupee_loss": 44154698.57399999
   },
   "policy_rupee_optimal": {
+    "threshold": 0.2666531209066462,
+    "precision": 0.5735021618282891,
+    "recall": 0.4569389763779528,
+    "f1": 0.5086277732128184,
+    "rupee_loss": 44154698.57399999
+  },
+  "saving_vs_f1_optimal": 0.0,
+  "threshold_selected_on": "calibration slice (never test)",
+  "policy_rupee_optimal_BIASED_swept_on_test": {
     "threshold": 0.2975763307290238,
     "precision": 0.6015441423296408,
     "recall": 0.4409448818897638,
     "f1": 0.508874059349709,
     "rupee_loss": 43843823.019999996
   },
-  "saving_vs_f1_optimal": 964857.1900000125
+  "optimism_from_sweeping_on_test": 310875.5539999977
 }

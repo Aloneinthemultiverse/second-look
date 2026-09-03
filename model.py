@@ -80,7 +80,7 @@ def main() -> None:
     print("loading and splitting ...")
     s = features.load_splits()
     X_tr, y_tr, _ = s["train"]
-    X_ca, y_ca, _ = s["calib"]
+    X_ca, y_ca, amt_ca = s["calib"]
     X_te, y_te, amt_te = s["test"]
     print(f"  {len(s['features'])} online features")
 
@@ -98,7 +98,8 @@ def main() -> None:
 
     # 2. calibrator -- fit on the calibration slice only, never on test
     print(f"calibrating ({calibrate.DEFAULT_CALIBRATOR} on the calibration slice) ...")
-    cal_te = calibrate.fit_calibrator(raw_ca, y_ca)(raw_te)
+    cal = calibrate.fit_calibrator(raw_ca, y_ca)
+    cal_te = cal(raw_te)
 
     # reliability measured on TEST -- fitting and validating on the same slice
     # would prove nothing
@@ -106,10 +107,36 @@ def main() -> None:
     ece_cal = calibrate.ece(y_te, cal_te)
 
     # 3. policy comparison
-    print("sweeping thresholds ...")
-    rows = sweep(cal_te, y_te, amt_te)
-    best_f1 = max(rows, key=lambda r: r["f1"])
-    best_rupee = min(rows, key=lambda r: r["rupee_loss"])
+    #
+    # THRESHOLDS ARE SELECTED ON THE CALIBRATION SLICE, NEVER ON TEST.
+    # An earlier version of this file swept on the test set and reported the
+    # result on that same test set -- fitting to the evaluation data. That was
+    # worth Rs 713,146 of savings that were never real (README finding #2). The
+    # biased figure is still computed below, but only to quantify the bias, and
+    # it is never the headline.
+    print("sweeping thresholds on the CALIBRATION slice ...")
+    cal_ca = cal(raw_ca)
+    rows_ca = sweep(cal_ca, y_ca, amt_ca)
+    best_f1_ca = max(rows_ca, key=lambda r: r["f1"])
+    best_rupee_ca = min(rows_ca, key=lambda r: r["rupee_loss"])
+
+    # honest: thresholds chosen off-test, every metric then measured ON TEST
+    def on_test(sel):
+        t = sel["threshold"]
+        pred = (cal_te >= t).astype(int)
+        prec, rec, f1, _ = precision_recall_fscore_support(
+            y_te, pred, average="binary", zero_division=0)
+        return {"threshold": t, "precision": float(prec), "recall": float(rec),
+                "f1": float(f1),
+                "rupee_loss": expected_loss(cal_te, y_te, amt_te, t)}
+
+    best_f1 = on_test(best_f1_ca)
+    best_rupee = on_test(best_rupee_ca)
+
+    # kept only to measure the optimism of the bug we removed
+    rows_te = sweep(cal_te, y_te, amt_te)
+    biased = min(rows_te, key=lambda r: r["rupee_loss"])
+
     do_nothing = expected_loss(cal_te, y_te, amt_te, threshold=2.0)  # never block
 
     report = {
@@ -124,6 +151,9 @@ def main() -> None:
         "policy_f1_optimal": best_f1,
         "policy_rupee_optimal": best_rupee,
         "saving_vs_f1_optimal": best_f1["rupee_loss"] - best_rupee["rupee_loss"],
+        "threshold_selected_on": "calibration slice (never test)",
+        "policy_rupee_optimal_BIASED_swept_on_test": biased,
+        "optimism_from_sweeping_on_test": best_rupee["rupee_loss"] - biased["rupee_loss"],
     }
     (config.ARTIFACTS / "results.json").write_text(
         json.dumps(report, indent=2), encoding="utf-8")
@@ -145,8 +175,10 @@ def main() -> None:
         print(f"{name:<22}{r['threshold']:>11.4f}{r['precision']:>11.3f}"
               f"{r['recall']:>9.3f}{r['rupee_loss']:>14,.0f}")
     print("-" * 66)
-    print(f"optimising F1 instead of rupees costs this merchant "
-          f"Rs {report['saving_vs_f1_optimal']:,.0f} on {len(y_te):,} transactions")
+    print(f"thresholds selected on the calibration slice, never on test")
+    print(f"optimism if we HAD swept on test: "
+          f"Rs {report['optimism_from_sweeping_on_test']:,.0f} "
+          f"(the bug removed in README finding #2)")
     print("=" * 66)
 
 

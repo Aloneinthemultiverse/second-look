@@ -91,6 +91,15 @@ fitting to my evaluation data. Moving threshold selection to the calibration
 slice dropped honest savings from 25.20% to **23.98%**. See `cost_sensitive.py`,
 arm `A0`, which is kept solely to quantify the bias.
 
+**A reviewer then caught that `model.py` still contained the bug.** The retraction
+was written, but the default entry point -- the file that writes `results.json`
+and runs second in `run_all.py` -- was still sweeping on test. Anyone cloning the
+repo would have reproduced the flattering number. Now fixed: thresholds are
+selected on the calibration slice and every metric is measured on test, with the
+optimism reported as a labelled diagnostic (**Rs 310,876** on this configuration)
+rather than as a result. Retracting a bug in prose while leaving it in the code
+that generates your headline artifact is worse than not retracting it.
+
 **3. "The optimal threshold varies 7× across merchant economics."** True on
 IEEE-CIS (3.4% fraud). Does **not** generalise: on ULB (0.13% fraud) two of four
 merchant profiles are told to block nothing at all. It is a base-rate-conditional
