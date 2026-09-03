@@ -1,0 +1,89 @@
+{
+  "rounds": 300,
+  "clients": [
+    "C",
+    "H",
+    "R",
+    "S",
+    "W"
+  ],
+  "results": {
+    "single LightGBM": {
+      "roc_auc": 0.8858947574914309,
+      "pr_auc": 0.4987540144651993,
+      "frauds_caught": 1638,
+      "frauds_total": 4064,
+      "recall_count": 0.4030511811023622,
+      "recall_value": 0.38190109533364586,
+      "precision": 0.614403600900225,
+      "fpr": 0.009013985707396203,
+      "rupee_loss": 44456606.382
+    },
+    "single XGBoost": {
+      "roc_auc": 0.8773988784559071,
+      "pr_auc": 0.4636150740062686,
+      "frauds_caught": 1489,
+      "frauds_total": 4064,
+      "recall_count": 0.36638779527559057,
+      "recall_value": 0.3549647826352245,
+      "precision": 0.6145274453157243,
+      "fpr": 0.008189749660221842,
+      "rupee_loss": 45534135.747999996
+    },
+    "RandomForest": {
+      "roc_auc": 0.8865475250997413,
+      "pr_auc": 0.4910473258789944,
+      "frauds_caught": 1706,
+      "frauds_total": 4064,
+      "recall_count": 0.4197834645669291,
+      "recall_value": 0.38124426561222485,
+      "precision": 0.6332590942835932,
+      "fpr": 0.008663246963917752,
+      "rupee_loss": 43483445.194000006
+    },
+    "ENSEMBLE (3 models)": {
+      "roc_auc": 0.8944896874265338,
+      "pr_auc": 0.5092977619016795,
+      "frauds_caught": 1724,
+      "frauds_total": 4064,
+      "recall_count": 0.4242125984251969,
+      "recall_value": 0.40315381588879756,
+      "precision": 0.6228323699421965,
+      "fpr": 0.009154281204787585,
+      "rupee_loss": 43131694.612
+    },
+    "local only (no sharing)": {
+      "roc_auc": 0.8709669748058424,
+      "pr_auc": 0.44496060747664984,
+      "frauds_caught": 1390,
+      "frauds_total": 4064,
+      "recall_count": 0.3420275590551181,
+      "recall_value": 0.3436560734957541,
+      "precision": 0.5722519555372582,
+      "fpr": 0.009110438861852777,
+      "rupee_loss": 48271304.274000004
+    },
+    "FedXGBBagging": {
+      "roc_auc": 0.7724268223397794,
+      "pr_auc": 0.31771971636813096,
+      "frauds_caught": 573,
+      "frauds_total": 4064,
+      "recall_count": 0.14099409448818898,
+      "recall_value": 0.16210942582514323,
+      "precision": 0.8197424892703863,
+      "fpr": 0.001104827041957122,
+      "rupee_loss": 50126136.29399999
+    },
+    "centralised (pooled)": {
+      "roc_auc": 0.8773988784559071,
+      "pr_auc": 0.4636150740062686,
+      "frauds_caught": 1489,
+      "frauds_total": 4064,
+      "recall_count": 0.36638779527559057,
+      "recall_value": 0.3549647826352245,
+      "precision": 0.6145274453157243,
+      "fpr": 0.008189749660221842,
+      "rupee_loss": 45534135.747999996
+    }
+  }
+}
