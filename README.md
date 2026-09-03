@@ -33,16 +33,16 @@ Temporally held-out test set: **118,109 transactions, 3.44% fraud, 42 days.**
 
 | Metric | Value |
 |---|---|
-| **Frauds caught** | **1,771 of 4,064 (43.6%)** |
+| **Frauds caught** | **1,771 of 4,064 (43.6%)** — 43.4–43.9% across 3 seeds |
 | **Precision** | **0.621** |
 | False-positive rate | **0.95%** |
 | Recall by value | 40.8% |
 | ROC-AUC | 0.8980 |
-| PR-AUC | 0.5220 |
+| PR-AUC | 0.5220 ± 0.0005 (3 seeds) |
 | **Card Precision@10/day** | **0.919** — 26.7x lift over base rate |
 | Calibration error (ECE) | 0.0067 -> **0.0032** after Platt |
 | Single-row inference | p50 **7.1 ms**, p95 11.1 ms |
-| Rupee loss vs Rs 58,551,022 doing nothing | **Rs 43,024,561** |
+| Rupee loss vs Rs 58,551,022 doing nothing | **Rs 43,024,561** (sd Rs 238,972 across 3 seeds) |
 
 Canonical configuration: 3-model ensemble at full tree budget, Platt calibration,
 per-instance threshold tau*(x). Nothing is fitted on the test set. Earlier drafts
@@ -504,7 +504,9 @@ script in the repo generated it, and seven analysis scripts were missing from
 `canonical.py` now produces the headline and every script is wired in.
 
 **Which numbers are seed-verified and which are not.** Verified across three
-seeds: the ensemble gain, PR-AUC, and every finding that was RETRACTED. Single
+seeds: **the headline itself** (`canonical.py --seeds` -- recall sd 0.3%, PR-AUC
+sd 0.0005, rupee loss sd Rs 238,972), the ensemble gain, and every finding that
+was RETRACTED. Single
 seed: the Rs 139M outage cost, the fallback's 96% recovery, the robustness
 ablations, and all four loss-type policies. Those are single-run and are labelled
 as such rather than being quietly presented alongside verified ones.
