@@ -1,0 +1,61 @@
+{
+  "static": [
+    {
+      "alpha": 0.01,
+      "lambda": 0.9000554599550803,
+      "achievable": true,
+      "auto_decided": 0.8972897916331525,
+      "error_cal": 0.009923706840269358,
+      "error_test": 0.011747721225159938,
+      "holds": false
+    },
+    {
+      "alpha": 0.02,
+      "lambda": 0.30766508218980965,
+      "achievable": true,
+      "auto_decided": 0.9906611689202347,
+      "error_cal": 0.019495040884958775,
+      "error_test": 0.02444319094747278,
+      "holds": false
+    },
+    {
+      "alpha": 0.05,
+      "lambda": 0.00017575894618082621,
+      "achievable": true,
+      "auto_decided": 1.0,
+      "error_cal": 0.023097895111171322,
+      "error_test": 0.02935424057438468,
+      "holds": true
+    }
+  ],
+  "aci": [
+    {
+      "auto_decided_frac": 0.8460326072914245,
+      "error_rate": 0.01095366072155713,
+      "final_alpha": 0.860799999999117,
+      "alpha_min": 0.0101,
+      "alpha_max": 0.999,
+      "alpha": 0.01,
+      "holds": false
+    },
+    {
+      "auto_decided_frac": 0.9482813563117416,
+      "error_rate": 0.018255467557945215,
+      "final_alpha": 0.9577999999999934,
+      "alpha_min": 0.0202,
+      "alpha_max": 0.999,
+      "alpha": 0.02,
+      "holds": true
+    },
+    {
+      "auto_decided_frac": 0.9831020851096814,
+      "error_rate": 0.02441588478015191,
+      "final_alpha": 0.999,
+      "alpha_min": 0.0505,
+      "alpha_max": 0.999,
+      "alpha": 0.05,
+      "holds": true
+    }
+  ],
+  "gamma": 0.01
+}

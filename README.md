@@ -163,10 +163,33 @@ series. Even splitting the first half of a 42-day window against the second half
 drift breaks the assumption. Vanilla CRC is the wrong tool here; time-series
 conformal (adaptive conformal inference, recalibrating online) would be needed.
 
-Not measured: the harder version calibrating on the earlier slice and testing on
-the later one. `model.py` does not persist calibration-slice scores. The milder
-split already broke, so the full temporal version would very likely break worse
--- but that is an expectation, not a result, and is not claimed.
+**Then I ran the version I had skipped** (`conformal_full.py`), calibrating on the
+earlier slice and deciding on the later one -- the deployment-realistic setting.
+Static CRC fails harder there, as the diagnosis predicted:
+
+| target | error on calibration | error on TEST | overshoot |
+|---|---|---|---|
+| 1% | 0.9924% | **1.1748%** | +17% |
+| 2% | 1.9495% | **2.4443%** | +22% |
+
+**And Adaptive Conformal Inference (Gibbs & Candes, NeurIPS 2021) largely fixes
+it.** ACI treats drift as a single parameter re-estimated online rather than
+freezing one threshold, and claims coverage without exchangeability:
+
+| target | static CRC | ACI | ACI holds? |
+|---|---|---|---|
+| 1% | 1.1748% | 1.0954% | no |
+| 2% | 2.4443% | **1.8255%** | **yes** |
+| 5% | 2.9354% | **2.4416%** | **yes** |
+
+ACI holds 2 of 3 targets where static CRC holds 1 (and that one only by
+abstaining on nothing). At 2% it converts a violation into compliance. It still
+fails at 1%, with its internal alpha swinging across 0.0101-0.9990 -- adapting as
+hard as it can and still unable to hold a 1% error rate against payment drift.
+
+**Conclusion: this system can carry a distribution-free error guarantee at 2% or
+looser, using ACI. It cannot at 1%.** That is a usable, honest operating limit
+rather than a bound quoted from a theorem whose assumption does not hold.
 
 **...and then finding #8 paid off.** The competence-dilution diagnosis makes a
 testable prediction: stop treating every client as equally qualified on every
