@@ -146,6 +146,32 @@ segment. Averaging does not dilute scale, it dilutes competence -- and calibrati
 cannot fix ignorance. This is why local-only (0.8710) beats every federated arm,
 and why personalised FL and gated expert routing exist rather than plain FedAvg.
 
+**...and then finding #8 paid off.** The competence-dilution diagnosis makes a
+testable prediction: stop treating every client as equally qualified on every
+transaction and the loss should be recoverable. `personalised_fl.py` tests it.
+
+| arm | ROC-AUC | rupee loss | vs naive averaging |
+|---|---|---|---|
+| uniform averaging (the failure) | 0.7724 | 50,126,136 | -- |
+| hard gating (own model only) | 0.8710 | 48,271,304 | +1,854,832 |
+| **personalised FL** (global init + local fine-tune) | **0.8717** | **46,884,668** | **+3,241,468** |
+| soft gate (per-segment stacking) | 0.8507 | 47,463,394 | +2,662,743 |
+| centralised, pooled (privacy-violating) | 0.8774 | 45,534,136 | +4,592,000 |
+
+**Personalised FL closes 51% of the gap between working alone and pooling all
+data, with no client sharing a row.**
+
+The learned gate weights confirm the mechanism from an independent direction.
+Each segment overwhelmingly trusts its own model (segment W weights itself
+17.109), and several foreign clients receive *negative* weights -- segment C
+subtracts W's opinion (-0.908), segment W subtracts H's (-1.373). The gate,
+fitted on held-out data, independently learned to silence exactly the voters
+finding #8 identified as the problem.
+
+Caveat: the soft gate underperforms plain personalisation and additionally
+requires sharing validation predictions and labels with the server -- a weaker
+privacy guarantee than the other arms. Its value here is diagnostic.
+
 Findings 1, 6 and 7 share a failure mode: a single run produced an attractive
 number and the spread swamped it. Every headline in this README is now checked
 across seeds before it is written down.
