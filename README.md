@@ -67,6 +67,30 @@ stream — work no analyst team will ever do. Under a realistic alert budget
 | "honest metrics including false-positive cost" | The entire project. FPR 0.94%; false-positive cost priced in rupees (margin + customer LTV) and used to choose every threshold. |
 | "strictly defense-only" | No attack generation, no evasion testing, no synthetic fraud synthesis anywhere in the repo. The one deployment-evidence item we do not meet — adversarial robustness — is omitted *because* of this rule, and declared rather than hidden. |
 
+**The "layer underneath all four" claim, measured** (`loss_types.py`). Same model,
+same scores, same threshold rule -- only the cost structure changes:
+
+| loss type | threshold range | blocks | recall | savings |
+|---|---|---|---|---|
+| CNP fraud (baseline) | 0.203 - 0.671 | 2.34% | 0.413 | 24.6% |
+| return / RTO | 0.878 - 0.997 | 0.62% | 0.160 | **-5.0%** |
+| chargeback dispute | 0.000 - 0.109 | 30.74% | 0.832 | **84.0%** |
+| Indian UPI economics | 0.172 - 0.999 | 0.81% | 0.194 | 7.9% |
+
+Each policy differs because the economics differ. An RTO returns the goods, so a
+miss costs shipping rather than order value and blocking is rarely worth it --
+at these parameters return-blocking **loses** money, and the framework says so.
+A chargeback dispute inverts the asymmetry entirely: a wrong contest costs
+analyst minutes, a missed one costs the full amount, so it contests at 30.74%.
+Under Indian UPI economics -- small tickets, thin margins, no card-style
+chargeback -- the median threshold moves from 0.357 to **0.876**: be far more
+permissive. That is the answer a system built only on US card economics gets
+wrong.
+
+This does not claim to DETECT returns or disputes. The detector is a fraud
+detector. It shows the layer that turns a score into an action is loss-type
+agnostic, which is what the submission rests on.
+
 **On the example directions.** The brief lists chargeback evidence responder,
 return-risk scorer, fraud-spike detector and abuse-ring sentinel. This project is
 none of those four — it is the **detector and decision layer that sits underneath

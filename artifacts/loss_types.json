@@ -1,0 +1,75 @@
+{
+  "cost_structures": {
+    "CNP fraud (baseline)": {
+      "fp_rate": 0.25,
+      "fp_fixed": 2500.0,
+      "fn_rate": 1.0,
+      "fn_fixed": 1200.0
+    },
+    "return / RTO": {
+      "fp_rate": 0.25,
+      "fp_fixed": 2500.0,
+      "fn_rate": 0.0,
+      "fn_fixed": 350.0
+    },
+    "chargeback dispute": {
+      "fp_rate": 0.0,
+      "fp_fixed": 150.0,
+      "fn_rate": 1.0,
+      "fn_fixed": 1200.0
+    },
+    "Indian UPI": {
+      "fp_rate": 0.12,
+      "fp_fixed": 2500.0,
+      "fn_rate": 1.0,
+      "fn_fixed": 0.0
+    }
+  },
+  "upi_amount_scale": 0.06,
+  "results": {
+    "CNP fraud (baseline)": {
+      "tau_min": 0.20296271257883594,
+      "tau_med": 0.3566533155318202,
+      "tau_max": 0.6705832023186917,
+      "block_rate": 0.023359777832341312,
+      "recall": 0.41289370078740156,
+      "precision": 0.6081913736861182,
+      "loss": 44124592.614,
+      "loss_doing_nothing": 58551021.568,
+      "savings": 0.24639073013005303
+    },
+    "return / RTO": {
+      "tau_min": 0.8775370817716396,
+      "tau_med": 0.9196694973605692,
+      "tau_max": 0.99710552527108,
+      "block_rate": 0.0061807313583215505,
+      "recall": 0.15994094488188976,
+      "precision": 0.8904109589041096,
+      "loss": 1493242.6400000001,
+      "loss_doing_nothing": 1422400.0,
+      "savings": -0.04980500562429706
+    },
+    "chargeback dispute": {
+      "tau_min": 0.00031670280456801993,
+      "tau_med": 0.020330712930333422,
+      "tau_max": 0.1085358370862614,
+      "block_rate": 0.3074109509012861,
+      "recall": 0.8324311023622047,
+      "precision": 0.09317505783849289,
+      "loss": 9380971.84,
+      "loss_doing_nothing": 58551021.568,
+      "savings": 0.8397812439684741
+    },
+    "Indian UPI": {
+      "tau_min": 0.17233922580062133,
+      "tau_med": 0.8755009153615514,
+      "tau_max": 0.9992318933553062,
+      "block_rate": 0.00809421805281562,
+      "recall": 0.19389763779527558,
+      "precision": 0.8242677824267782,
+      "loss": 2964939.5269056,
+      "loss_doing_nothing": 3220453.29408,
+      "savings": 0.07934093242218362
+    }
+  }
+}
