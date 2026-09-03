@@ -1,0 +1,43 @@
+{
+  "unconditional_error": 0.02935424057438468,
+  "n_calibration": 59054,
+  "n_heldout": 59055,
+  "results": [
+    {
+      "alpha": 0.01,
+      "lambda": 0.9220239780028339,
+      "auto_decided_frac": 0.8683092032850732,
+      "error_calibration": 0.009892939422686,
+      "error_heldout": 0.01121338585748274,
+      "guarantee_holds": false,
+      "achievable": true
+    },
+    {
+      "alpha": 0.02,
+      "lambda": 0.4761492059636845,
+      "auto_decided_frac": 0.982236897807129,
+      "error_calibration": 0.01953064557723717,
+      "error_heldout": 0.023342412853842705,
+      "guarantee_holds": false,
+      "achievable": true
+    },
+    {
+      "alpha": 0.05,
+      "lambda": 0.001745286448462835,
+      "auto_decided_frac": 0.9999830666327999,
+      "error_calibration": 0.026670504961560607,
+      "error_heldout": 0.032021539607816576,
+      "guarantee_holds": true,
+      "achievable": true
+    },
+    {
+      "alpha": 0.1,
+      "lambda": 0.001745286448462835,
+      "auto_decided_frac": 0.9999830666327999,
+      "error_calibration": 0.026670504961560607,
+      "error_heldout": 0.032021539607816576,
+      "guarantee_holds": true,
+      "achievable": true
+    }
+  ]
+}

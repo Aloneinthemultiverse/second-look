@@ -78,7 +78,7 @@ why the work is about the decision layer rather than a specific alert type.
 
 ## What I got wrong
 
-This section is first on purpose. Eight claims did not survive checking.
+This section is first on purpose. Nine claims did not survive checking.
 
 **1. "Optimising F1 instead of rupees costs ₹964,857." — Dead.**
 Ran three seeds and three split points. The gap ranged from ₹0 to ₹710,488 —
@@ -145,6 +145,28 @@ of five voters are extrapolating blind and outvote the one model that knows that
 segment. Averaging does not dilute scale, it dilutes competence -- and calibration
 cannot fix ignorance. This is why local-only (0.8710) beats every federated arm,
 and why personalised FL and gated expert routing exist rather than plain FedAvg.
+
+**9. Conformal risk control cannot give this system a valid guarantee.** The
+decision layer abstains when uncertain, so Conformal Risk Control (Angelopoulos
+et al.) should be able to certify "at most alpha of auto-decided payments are
+wrong". Implemented in `conformal.py`. It fails at every useful target:
+
+| target | error on calibration | error held out | holds? |
+|---|---|---|---|
+| 1% | 0.9893% | **1.1213%** | NO |
+| 2% | 1.9531% | **2.3342%** | NO |
+| 5% | 2.6671% | 3.2022% | trivially (abstains on nothing) |
+
+It fails in the unsafe direction -- true error exceeds the promise. The reason is
+structural: conformal guarantees require exchangeability, and payments are a time
+series. Even splitting the first half of a 42-day window against the second half,
+drift breaks the assumption. Vanilla CRC is the wrong tool here; time-series
+conformal (adaptive conformal inference, recalibrating online) would be needed.
+
+Not measured: the harder version calibrating on the earlier slice and testing on
+the later one. `model.py` does not persist calibration-slice scores. The milder
+split already broke, so the full temporal version would very likely break worse
+-- but that is an expectation, not a result, and is not claimed.
 
 **...and then finding #8 paid off.** The competence-dilution diagnosis makes a
 testable prediction: stop treating every client as equally qualified on every
