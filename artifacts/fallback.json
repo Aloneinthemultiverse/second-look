@@ -1,0 +1,48 @@
+{
+  "c_family": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8",
+    "C9",
+    "C10",
+    "C11",
+    "C12",
+    "C13",
+    "C14"
+  ],
+  "fallback_features": 63,
+  "scenarios": {
+    "1. counting service healthy (primary)": {
+      "blocked": 2759,
+      "frauds_caught": 1678,
+      "recall": 0.41289370078740156,
+      "precision": 0.6081913736861182,
+      "fpr": 0.009478714542505151,
+      "rupee_loss": 44124592.614
+    },
+    "2. service down, NO fallback (today)": {
+      "blocked": 24633,
+      "frauds_caught": 2501,
+      "recall": 0.6154035433070866,
+      "precision": 0.10153046725936751,
+      "fpr": 0.19406374676662722,
+      "rupee_loss": 183285533.54
+    },
+    "3. service down, fallback engaged": {
+      "blocked": 1990,
+      "frauds_caught": 1009,
+      "recall": 0.2482775590551181,
+      "precision": 0.507035175879397,
+      "fpr": 0.008601867683809022,
+      "rupee_loss": 50196138.88
+    }
+  },
+  "outage_cost_today": 139160940.926,
+  "outage_cost_with_fallback": 6071546.266000003,
+  "recovered": 133089394.66
+}

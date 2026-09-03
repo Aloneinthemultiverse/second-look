@@ -336,8 +336,28 @@ Feature importance says diversified; ablation says fragile. **The reassuring
 metric was the wrong one.** Few decisions flip when `C13` is lost, but the ones
 that do are the expensive ones -- so the failure is quiet as well as costly.
 `C1`, `C13` and `C14` are address/phone count signals sourced from a counting
-service in production; that service needs an availability guarantee or a
-documented fallback model, and this project provides neither.
+service in production. **That gap is now closed** (`fallback.py`).
+
+The full outage is far worse than the single-feature audit suggested. Losing the
+whole C-family (C1-C14) costs **Rs 139,160,941** -- loss quadruples from Rs 44.1M
+to Rs 183.3M. And the failure mode is perverse: the primary model blocks **24,633
+payments instead of 2,759** at a **19.41% false-positive rate**, declining one in
+five genuine customers -- while *recall rises* from 0.413 to 0.615. On a
+fraud-caught dashboard an outage looks like the model improving.
+
+| scenario | blocked | recall | FPR | rupee loss |
+|---|---|---|---|---|
+| counting service healthy | 2,759 | 0.413 | 0.95% | 44,124,593 |
+| service down, no fallback | 24,633 | 0.615 | **19.41%** | **183,285,534** |
+| service down, fallback engaged | 1,990 | 0.248 | 0.86% | 50,196,139 |
+
+**The fallback recovers 96% of the outage cost** (Rs 139.2M -> Rs 6.1M). It is a
+weaker detector -- recall 0.248 -- but it is honest about what it cannot see, and
+holds FPR at 0.86%. Degrading quietly beats degrading loudly.
+
+Routing rule: if any C-family feature is unavailable, score with the fallback
+model **and its own calibrator and threshold**. Never score a partially-blank
+vector with the primary.
 
 ## Industry context
 
