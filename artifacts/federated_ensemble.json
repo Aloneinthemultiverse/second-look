@@ -1,0 +1,67 @@
+{
+  "clients": [
+    "C",
+    "H",
+    "R",
+    "S",
+    "W"
+  ],
+  "rounds_total": 300,
+  "results": {
+    "local only (no sharing)": {
+      "roc_auc": 0.8709669748058424,
+      "pr_auc": 0.44496060747664984,
+      "frauds_caught": 1390,
+      "frauds_total": 4064,
+      "recall_count": 0.3420275590551181,
+      "recall_value": 0.3436560734957541,
+      "precision": 0.5722519555372582,
+      "fpr": 0.009110438861852777,
+      "rupee_loss": 48271304.274000004
+    },
+    "A raw bagging": {
+      "roc_auc": 0.7724268223397794,
+      "pr_auc": 0.31771971636813096,
+      "frauds_caught": 573,
+      "frauds_total": 4064,
+      "recall_count": 0.14099409448818898,
+      "recall_value": 0.16210942582514323,
+      "precision": 0.8197424892703863,
+      "fpr": 0.001104827041957122,
+      "rupee_loss": 50126136.29399999
+    },
+    "B calibrated bagging": {
+      "roc_auc": 0.7684776682812386,
+      "pr_auc": 0.3149588548136279,
+      "frauds_caught": 511,
+      "frauds_total": 4064,
+      "recall_count": 0.12573818897637795,
+      "recall_value": 0.149491534773999,
+      "precision": 0.822866344605475,
+      "fpr": 0.0009645315445657416,
+      "rupee_loss": 50797611.062
+    },
+    "C federated ensemble": {
+      "roc_auc": 0.7765289315879939,
+      "pr_auc": 0.3236402346132484,
+      "frauds_caught": 557,
+      "frauds_total": 4064,
+      "recall_count": 0.13705708661417323,
+      "recall_value": 0.15187774409866964,
+      "precision": 0.8608964451313755,
+      "fpr": 0.0007891621728265158,
+      "rupee_loss": 50355245.309999995
+    },
+    "D centralised ensemble": {
+      "roc_auc": 0.8944896874265338,
+      "pr_auc": 0.5092977619016795,
+      "frauds_caught": 1724,
+      "frauds_total": 4064,
+      "recall_count": 0.4242125984251969,
+      "recall_value": 0.40315381588879756,
+      "precision": 0.6228323699421965,
+      "fpr": 0.009154281204787585,
+      "rupee_loss": 43131694.612
+    }
+  }
+}

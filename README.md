@@ -78,7 +78,7 @@ why the work is about the decision layer rather than a specific alert type.
 
 ## What I got wrong
 
-This section is first on purpose. Seven claims did not survive checking.
+This section is first on purpose. Eight claims did not survive checking.
 
 **1. "Optimising F1 instead of rupees costs ₹964,857." — Dead.**
 Ran three seeds and three split points. The gap ranged from ₹0 to ₹710,488 —
@@ -130,6 +130,21 @@ sd Rs 760,562 against a mean of Rs 742,277, and the sign flips negative. Cut.
 Across three: +103,635 / -283,176 / -23,569, mean **negative**. Cut. What *is*
 consistent is that it makes value-recall worse in 3/3 seeds (-0.021 average) --
 it reliably hurts the thing it was added to fix.
+
+**8. My explanation for why federated learning failed was wrong.** I diagnosed
+FedXGBBagging's collapse (AUC 0.8838 -> 0.7891) as base-rate scale mismatch:
+clients trained on 1.93%-13.35% fraud emit differently-scaled scores, so averaging
+them is incoherent. That diagnosis implies a fix -- calibrate each client locally
+before aggregating -- so I tested it (`federated_ensemble.py`). It made things
+**worse** (0.7724 -> 0.7685). A federated ensemble did not help either (0.7765).
+
+The diagnosis was refuted by its own remedy. The real mechanism is visible in the
+false-positive rate, which collapses to 0.08-0.11%: each client's model votes on
+ALL traffic including segments it never trained on, so for any transaction four
+of five voters are extrapolating blind and outvote the one model that knows that
+segment. Averaging does not dilute scale, it dilutes competence -- and calibration
+cannot fix ignorance. This is why local-only (0.8710) beats every federated arm,
+and why personalised FL and gated expert routing exist rather than plain FedAvg.
 
 Findings 1, 6 and 7 share a failure mode: a single run produced an attractive
 number and the spread swamped it. Every headline in this README is now checked
