@@ -299,6 +299,14 @@ nothing downstream consumes its output.
 | **Dal Pozzolo et al. (TNNLS 2017)** | Alert budget, Card Precision@k — reframed what "good" means |
 | **arXiv:2607.19266 (2026)** | Precedent for bounded LLM investigation on uncertain cases |
 
+**On graph neural networks.** The structural signal GNNs learn -- entity
+co-occurrence cardinality -- is already present in this dataset as the C-family
+count features, precomputed by Vesta. The ablation in `robustness.py` shows how
+much they carry: losing them costs Rs 139M. The booster reads that structure
+from a column; GraphSAGE has to rediscover it by message passing over a sparse
+proxy graph, and does it worse. Building one confirmed this rather than assuming
+it.
+
 **Combining Chow with a capacity constraint produced a result none of them
 state:** at 80% analyst accuracy, reviewing 500 cases/day is *worse than having no
 fraud system at all* (₹60.9M vs ₹58.5M). Analyst accuracy caps useful review

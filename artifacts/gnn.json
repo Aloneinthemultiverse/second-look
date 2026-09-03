@@ -1,0 +1,28 @@
+{
+  "nodes": 590540,
+  "edges": 5850307,
+  "k": 5,
+  "relations": [
+    "card1",
+    "DeviceInfo",
+    "P_emaildomain"
+  ],
+  "graphsage": {
+    "roc_auc": 0.8148892059547568,
+    "pr_auc": 0.28271952251273613,
+    "frauds_caught": 562,
+    "frauds_total": 4064,
+    "recall": 0.13828740157480315,
+    "precision": 0.5321969696969697,
+    "fpr": 0.004331623481958876,
+    "rupee_loss": 56551376.21
+  },
+  "lightgbm_reference": {
+    "roc_auc": 0.8859,
+    "pr_auc": 0.4988,
+    "frauds_caught": 1638,
+    "recall": 0.403,
+    "fpr": 0.009,
+    "rupee_loss": 44456606
+  }
+}
