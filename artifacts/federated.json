@@ -1,0 +1,33 @@
+{
+  "clients": [
+    "C",
+    "H",
+    "R",
+    "S",
+    "W"
+  ],
+  "results": {
+    "local only (no collaboration)": {
+      "roc_auc": 0.8838393585485491,
+      "pr_auc": 0.466976314578533,
+      "rupee_loss": 47367659.266
+    },
+    "FedXGBBagging": {
+      "roc_auc": 0.7891313548095222,
+      "pr_auc": 0.3425931915121885,
+      "rupee_loss": 49527929.966
+    },
+    "FedXGBCyclic": {
+      "roc_auc": 0.8471014828119029,
+      "pr_auc": 0.3712078455974418,
+      "rupee_loss": 49879068.949999996
+    },
+    "centralised (pooled, no privacy)": {
+      "roc_auc": 0.8773988784559071,
+      "pr_auc": 0.4636150740062686,
+      "rupee_loss": 45534135.747999996
+    }
+  },
+  "local_rounds": 150,
+  "cyclic_passes": 3
+}
