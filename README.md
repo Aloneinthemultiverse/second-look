@@ -78,7 +78,7 @@ why the work is about the decision layer rather than a specific alert type.
 
 ## What I got wrong
 
-This section is first on purpose. Nine claims did not survive checking.
+This section is first on purpose. Ten claims did not survive checking.
 
 **1. "Optimising F1 instead of rupees costs ₹964,857." — Dead.**
 Ran three seeds and three split points. The gap ranged from ₹0 to ₹710,488 —
@@ -216,6 +216,22 @@ finding #8 identified as the problem.
 Caveat: the soft gate underperforms plain personalisation and additionally
 requires sharing validation predictions and labels with the server -- a weaker
 privacy guarantee than the other arms. Its value here is diagnostic.
+
+**10. "Blending 10% GraphSAGE into the ensemble saves Rs 457,706."** One seed.
+Across three it is negative in 3/3, mean **-Rs 206,189**, sd Rs 189,511. The sign
+flipped entirely. `verify_hybrid.py`
+
+This one was predicted before it was run. It had the same signature as finding
+#7 -- a single-seed gain achieved by *lowering FPR* rather than catching more
+fraud. Both evaporated. Two independent confirmations give a rule specific to
+this problem: **a blend component that appears to win by reducing false-positive
+rate on one seed is noise until three seeds say otherwise.**
+
+What IS stable across seeds: Spearman correlation between GNN and ensemble
+scores of 0.7497-0.7588, and 11-13 frauds the ensemble ranks below the 90th
+percentile that the GNN ranks above the 99th. So the graph model consistently
+sees something slightly different -- it is just far too little to outweigh what
+it gets wrong elsewhere. Not useless; not worth its weight.
 
 Findings 1, 6 and 7 share a failure mode: a single run produced an attractive
 number and the spread swamped it. Every headline in this README is now checked
