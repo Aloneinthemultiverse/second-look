@@ -1,0 +1,127 @@
+{
+  "baseline_loss": 44124592.614,
+  "baseline_blocked": 2759,
+  "signal_loss": [
+    {
+      "feature": "C13",
+      "gain_share": 0.07122099553455262,
+      "decisions_flipped": 4318,
+      "flip_rate": 0.03655944932223624,
+      "blocked_after": 6961,
+      "loss_after": 62334201.804
+    },
+    {
+      "feature": "C1",
+      "gain_share": 0.10054102342168719,
+      "decisions_flipped": 2312,
+      "flip_rate": 0.019575138219780033,
+      "blocked_after": 3395,
+      "loss_after": 52498524.134
+    },
+    {
+      "feature": "C14",
+      "gain_share": 0.06264289375514515,
+      "decisions_flipped": 2274,
+      "flip_rate": 0.019253401518935898,
+      "blocked_after": 4761,
+      "loss_after": 51884222.156
+    },
+    {
+      "feature": "TransactionAmt",
+      "gain_share": 0.04536098286810903,
+      "decisions_flipped": 944,
+      "flip_rate": 0.007992616989391155,
+      "blocked_after": 1875,
+      "loss_after": 49379197.968
+    },
+    {
+      "feature": "card2",
+      "gain_share": 0.05233277345894828,
+      "decisions_flipped": 936,
+      "flip_rate": 0.00792488294710818,
+      "blocked_after": 2723,
+      "loss_after": 47667271.222
+    },
+    {
+      "feature": "C5",
+      "gain_share": 0.024991549325458527,
+      "decisions_flipped": 291,
+      "flip_rate": 0.002463825788043248,
+      "blocked_after": 3012,
+      "loss_after": 46087172.014
+    },
+    {
+      "feature": "addr1",
+      "gain_share": 0.04858744885599234,
+      "decisions_flipped": 604,
+      "flip_rate": 0.00511392019236468,
+      "blocked_after": 2695,
+      "loss_after": 45706977.06
+    },
+    {
+      "feature": "R_emaildomain",
+      "gain_share": 0.033555457229393834,
+      "decisions_flipped": 470,
+      "flip_rate": 0.003979374984124834,
+      "blocked_after": 2355,
+      "loss_after": 45449931.772
+    },
+    {
+      "feature": "card1",
+      "gain_share": 0.05569022554864625,
+      "decisions_flipped": 894,
+      "flip_rate": 0.007569279225122556,
+      "blocked_after": 2391,
+      "loss_after": 45412420.494
+    },
+    {
+      "feature": "id_31",
+      "gain_share": 0.027142543836972104,
+      "decisions_flipped": 282,
+      "flip_rate": 0.0023876249904749,
+      "blocked_after": 2553,
+      "loss_after": 44143911.464
+    },
+    {
+      "feature": "C4",
+      "gain_share": 0.054032247644186605,
+      "decisions_flipped": 142,
+      "flip_rate": 0.0012022792505228222,
+      "blocked_after": 2643,
+      "loss_after": 44138460.882
+    },
+    {
+      "feature": "DeviceInfo",
+      "gain_share": 0.05409406409536599,
+      "decisions_flipped": 229,
+      "flip_rate": 0.001938886960350185,
+      "blocked_after": 2868,
+      "loss_after": 43962594.24600001
+    }
+  ],
+  "concentration": {
+    "top_share": 0.10054102342168719,
+    "top3": 0.23440491271138497,
+    "hhi": 0.04272120755067257
+  },
+  "noise": [
+    {
+      "noise_sd": 0.01,
+      "changed": 1758,
+      "churn_rate": 0.014884555791683953,
+      "loss": 51099068.812
+    },
+    {
+      "noise_sd": 0.05,
+      "changed": 4521,
+      "churn_rate": 0.03827820064516675,
+      "loss": 68341796.002
+    },
+    {
+      "noise_sd": 0.1,
+      "changed": 8542,
+      "churn_rate": 0.0723230236476475,
+      "loss": 94933665.95000002
+    }
+  ]
+}

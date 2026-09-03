@@ -317,9 +317,27 @@ LLMs in Fraud Detection and Trust-and-Safety Workflows* (arXiv:2607.13078, 2026)
 | **Cost per decision** | ✅ explicit rupee cost model, all parameters in `config.py`, varied ±30% |
 | **Decision threshold** | ✅ per-instance τ\*(x) from costs; selected off-test, never on the evaluation slice |
 | **Explanation integrity** | ✅ TreeSHAP attributions; the LLM emits no numeric field and triggers no action |
-| **Adversarial pressure** | ❌ **not evaluated.** Track 02 is strictly defence-only, so no attack generation was built. This is a real gap in deployment evidence, declared rather than glossed. |
+| **Adversarial pressure** | ⚠️ **partially — defensive audits only** (`robustness.py`). No evasion search, no attack generation: those are offense-capable and excluded by the track rules. Instead: signal-loss ablation, concentration analysis, and noise-stability testing. |
 
-Four of five. The fifth is deliberately out of scope under the competition rules.
+Four of five met, the fifth partially. What was NOT done and why: an evasion
+search -- an optimiser finding minimal perturbations that flip a decision -- is
+an attack tool regardless of intent, so it is excluded by "anything
+offense-capable is disqualified".
+
+**The audit found real fragility, and contradicted a reassuring metric.**
+
+| audit | result |
+|---|---|
+| Signal loss (blank one feature) | Losing `C13` costs **+Rs 18,209,609 -- 41% more loss** -- while flipping only 3.66% of decisions |
+| Concentration (Herfindahl) | 0.0427, 76/77 features contributing -- reads as "well diversified" |
+| Noise stability | 1% jitter costs Rs 6,974,476; 10% costs Rs 50,809,073 |
+
+Feature importance says diversified; ablation says fragile. **The reassuring
+metric was the wrong one.** Few decisions flip when `C13` is lost, but the ones
+that do are the expensive ones -- so the failure is quiet as well as costly.
+`C1`, `C13` and `C14` are address/phone count signals sourced from a counting
+service in production; that service needs an availability guarantee or a
+documented fallback model, and this project provides neither.
 
 ## Industry context
 
