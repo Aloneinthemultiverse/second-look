@@ -33,15 +33,22 @@ Temporally held-out test set: **118,109 transactions, 3.44% fraud, 42 days.**
 
 | Metric | Value |
 |---|---|
-| **Precision** | **0.604** |
-| **Recall** | **0.441** |
-| False-positive rate | 0.94% |
-| PR-AUC | 0.5091 ± 0.0028 (3 seeds) |
-| ROC-AUC | 0.8870 |
-| **Card Precision@10/day** | **0.919** — 26.7× lift over base rate |
-| Calibration error (ECE) | 0.0067 → **0.0032** after Platt |
+| **Frauds caught** | **1,776 of 4,064 (43.7%)** |
+| **Precision** | **0.623** |
+| False-positive rate | **0.94%** |
+| Recall by value | 40.9% |
+| ROC-AUC | 0.8976 |
+| PR-AUC | 0.5224 |
+| **Card Precision@10/day** | **0.919** — 26.7x lift over base rate |
+| Calibration error (ECE) | 0.0067 -> **0.0032** after Platt |
 | Single-row inference | p50 **7.1 ms**, p95 11.1 ms |
-| Savings vs no fraud system | **23.98%** (honest), 24.82% best strategy |
+| Rupee loss vs Rs 58,551,022 doing nothing | **Rs 42,986,397** |
+
+Canonical configuration: 3-model ensemble at full tree budget, Platt calibration,
+per-instance threshold tau*(x). Nothing is fitted on the test set. Earlier drafts
+of this README quoted 44.1% (single model, threshold swept on test -- mildly
+flattering) and 42.4% (ensemble at half tree budget, reduced so the federated
+comparison in `leaderboard.py` was fair). **43.7% is the number to use.**
 
 **The single most important number is Card Precision@10 = 0.919.** PR-AUC of 0.51
 makes this model look mediocre, but PR-AUC measures performance over the whole
