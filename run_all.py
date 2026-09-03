@@ -20,6 +20,7 @@ import time
 
 STAGES = [
     ("data.py", "temporal split + feature audit", False),
+    ("canonical.py", "THE HEADLINE NUMBER (ensemble, per-instance threshold)", False),
     ("model.py", "detector + calibration + threshold sweep (writes scores)", False),
     ("audit.py", "segmented calibration, degeneracy, error anatomy, drift", False),
     ("sensitivity.py", "threshold sensitivity to cost assumptions", False),
@@ -29,7 +30,13 @@ STAGES = [
     ("playbook.py", "5-lookup playbook + entity graph + info filter", False),
     ("investigator.py", "TreeSHAP -> analyst briefs", False),
     ("review_band_metrics.py", "does the evidence add signal? (honest answer: no)", True),
+    ("robustness.py", "defence-only adversarial audits", False),
+    ("fallback.py", "counting-service outage fallback", False),
+    ("loss_types.py", "one decision layer, four loss types", False),
     ("plots.py", "figures", False),
+    ("gnn.py", "GraphSAGE on a time-respecting graph", True),
+    ("hybrid.py", "ensemble + GNN blend", True),
+    ("verify_hybrid.py", "is the hybrid gain real? (3 seeds)", True),
     ("calibration_compare.py", "none vs Platt vs isotonic", True),
     ("cost_sensitive.py", "global vs per-instance vs cost-weighted", True),
     ("restriction_cost.py", "cost of the inference-latency constraint", True),

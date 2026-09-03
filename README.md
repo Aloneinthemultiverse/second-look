@@ -33,22 +33,26 @@ Temporally held-out test set: **118,109 transactions, 3.44% fraud, 42 days.**
 
 | Metric | Value |
 |---|---|
-| **Frauds caught** | **1,776 of 4,064 (43.7%)** |
-| **Precision** | **0.623** |
-| False-positive rate | **0.94%** |
-| Recall by value | 40.9% |
-| ROC-AUC | 0.8976 |
-| PR-AUC | 0.5224 |
+| **Frauds caught** | **1,771 of 4,064 (43.6%)** |
+| **Precision** | **0.621** |
+| False-positive rate | **0.95%** |
+| Recall by value | 40.8% |
+| ROC-AUC | 0.8980 |
+| PR-AUC | 0.5220 |
 | **Card Precision@10/day** | **0.919** — 26.7x lift over base rate |
 | Calibration error (ECE) | 0.0067 -> **0.0032** after Platt |
 | Single-row inference | p50 **7.1 ms**, p95 11.1 ms |
-| Rupee loss vs Rs 58,551,022 doing nothing | **Rs 42,986,397** |
+| Rupee loss vs Rs 58,551,022 doing nothing | **Rs 43,024,561** |
 
 Canonical configuration: 3-model ensemble at full tree budget, Platt calibration,
 per-instance threshold tau*(x). Nothing is fitted on the test set. Earlier drafts
 of this README quoted 44.1% (single model, threshold swept on test -- mildly
 flattering) and 42.4% (ensemble at half tree budget, reduced so the federated
-comparison in `leaderboard.py` was fair). **43.7% is the number to use.**
+comparison in `leaderboard.py` was fair). **43.6% is the number to use** -- and it moved from 43.7% when the headline was
+made reproducible. The original came from an inline command that did not set
+LightGBM's `bagging_seed` and `feature_fraction_seed` explicitly, so it was not
+regenerable and, when regenerated, was not quite the same number. Five frauds and
+Rs 38,164 apart. Small, but it was the headline, and nobody could have checked it.
 
 **The single most important number is Card Precision@10 = 0.919.** PR-AUC of 0.51
 makes this model look mediocre, but PR-AUC measures performance over the whole
@@ -486,10 +490,24 @@ whatever score you have.
 ```bash
 pip install -r requirements.txt
 python fetch_data.py     # needs ~/.kaggle/kaggle.json + accepted competition rules
-python run_all.py        # every result, in order (--quick to skip retraining stages)
+python canonical.py      # the headline number on its own
+python canonical.py --seeds   # ...and its spread across 3 seeds
+python run_all.py        # every stage, in order (--quick skips the slow ones)
 ```
 
 Every stage writes JSON to `artifacts/`. All models train with `seed=42`.
+
+**Reproducibility note, because this was wrong.** The headline figure was
+originally produced by an inline terminal command and never committed -- no
+script in the repo generated it, and seven analysis scripts were missing from
+`run_all.py`, while the README claimed it ran "every result". Both fixed:
+`canonical.py` now produces the headline and every script is wired in.
+
+**Which numbers are seed-verified and which are not.** Verified across three
+seeds: the ensemble gain, PR-AUC, and every finding that was RETRACTED. Single
+seed: the Rs 139M outage cost, the fallback's 96% recovery, the robustness
+ablations, and all four loss-type policies. Those are single-run and are labelled
+as such rather than being quietly presented alongside verified ones.
 
 ---
 
