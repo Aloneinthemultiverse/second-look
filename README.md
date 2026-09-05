@@ -640,6 +640,168 @@ as such rather than being quietly presented alongside verified ones.
 
 ---
 
+## The three-way decision, measured
+
+`three_way.py`. Two-way ALLOW/BLOCK is the headline policy; adding a human lane
+is what the analyst budget actually buys. Both computed on the same ensemble
+scores, so nothing is mixed across runs.
+
+**Test set: 118,109 transactions, 4,064 frauds.**
+
+| Lane | Transactions | Frauds in it | Share of all fraud |
+|---|---|---|---|
+| ALLOW | 81,716 (69.2%) | 615 | 15.1% |
+| **REVIEW** | 35,916 (30.4%) | **3,009** | **74.0%** |
+| BLOCK | 477 (0.4%) | 440 | 10.8% |
+
+**Fraud reached (review + block): 3,449 of 4,064 = 84.9%**, against 43.6% for
+blocking alone. Auto-block precision is **92.2%** -- 37 genuine customers touched
+in the whole test set.
+
+The review lane is 2.4x denser in fraud than the traffic it holds. Sweeping the
+review cost moves the whole structure:
+
+| Review cost | Fraud reached | Reviews/day | Auto-block precision | Realised loss |
+|---|---|---|---|---|
+| Rs 25 | **96.8%** | 1,861 | 100.0% | Rs 2.76M |
+| Rs 150 | 84.9% | 855 | 92.2% | Rs 9.61M |
+| Rs 400 | 74.8% | 458 | 88.2% | Rs 16.2M |
+| Rs 1,000 | 60.9% | 210 | 80.7% | Rs 24.4M |
+
+**Do not quote the Rs 9.61M bare.** It charges reviews at cost and assumes
+analysts resolve every case correctly. `chow_capacity.py` models 80% and 90%
+accuracy -- at 80%, a large queue starts *losing* money.
+
+---
+
+## Nine datasets, one pipeline
+
+`transfer.py`, `try_baf.py`, `indian_all.py` -> `artifacts/transfer.json`.
+
+Same code every time: temporal split, identical LightGBM parameters, Platt
+calibration, the same cost rule with LTV set to 50% of each dataset's own median
+amount. Only the loader changes. Nothing is tuned per dataset.
+
+**Real data**
+
+| Dataset | Rows | Fraud % | AUC | ALLOW | REVIEW | BLOCK | Caught | Conc |
+|---|---|---|---|---|---|---|---|---|
+| IEEE-CIS *(shipped)* | 590,540 | 3.44% | 0.8870 | 84,992 | 32,619 | 497 | 3,329/4,064 | 2.6x |
+| ULB credit card | 284,807 | 0.13% | 0.9375 | 56,458 | 454 | 50 | 60/75 | 18.4x |
+| Elliptic (Bitcoin) | 203,769 | 9.76% | **0.9623** | -- | -- | -- | -- | -- |
+| NeurIPS BAF | 1,000,000 | 1.40% | 0.8892 | 159,689 | 40,311 | 0 | 2,191/2,799 | 3.9x |
+
+**Simulated -- scores inflated, generator rules are learnable**
+
+| Dataset | Rows | AUC | Caught | Conc |
+|---|---|---|---|---|
+| Sparkov | 1,296,675 | 0.9888 | 1,336/1,538 | 30.4x |
+| PaySim | 6,362,620 | 0.9258 | 3,238/4,254 | 251.8x |
+| Indian financial fraud | 245,091 | 0.8513 | 1,367/1,681 | 2.2x |
+
+**No signal -- negative controls, kept in deliberately**
+
+| Dataset | Rows | AUC | Conc |
+|---|---|---|---|
+| Indian bank transactions | 200,000 | 0.4896 | **1.0x** |
+| Indian banking 2019-24 | 217,428 | 0.5252 | 1.3x |
+
+**Concentration is the column that matters** -- how much denser the review lane
+is in fraud than the traffic it holds. At **1.0x** the model found nothing and
+the frauds in that lane are there by volume alone, which is why the bottom two
+rows appear to "catch" 1,346 and 115 frauds while detecting precisely zero.
+**Never sum the caught column across tiers.**
+
+Elliptic shows dashes because its features are fully anonymised with no amount
+column -- the cost layer needs a value to work with, so only ranking quality is
+reported (PR-AUC 0.7774, 15.3x lift). NeurIPS BAF is account-opening fraud, not
+transaction fraud, and is labelled as such.
+
+**Four popular datasets were rejected before testing.** Three (`rupakroy`,
+`jainilcoder`, `chitwanmanchanda`) are byte-identical 186 MB re-uploads of
+PaySim; one (`whenamancodes`) is ULB again; and
+`nelgiriyewithana/credit-card-fraud-2023` has been rebalanced to **exactly
+50.0000%** fraud, which makes every rate computed on it meaningless. A fifth,
+`skullagos/upi-transactions-2024`, was dropped after catching **0 of 96**.
+
+---
+
+## Is there a real Indian dataset? No.
+
+`indian_all.py`, `clean_indian.py`. Five tested; all fail, in two distinct ways.
+
+| Dataset | AUC | Failure mode |
+|---|---|---|
+| marusagar/bank-transaction-fraud | 0.4896 | pure noise |
+| skullagos/upi-transactions-2024 | 0.4951 | noise |
+| belbino/indian-banking-2019-24 | 0.5252 | noise |
+| saurabhbadole/CIBIL | 0.9999 | **target leakage** -- grade derived from its own features |
+| jatinkhandelwal/indian-financial-fraud | 0.9754 -> 0.8513 | **3 leaks**; usable after cleaning |
+
+Proof the first is generated: the fraud rate is 5.04% inside *every* category
+(spread <= 1.1%); mean amount Rs 49,552 genuine vs Rs 49,278 fraud; and
+**Customer_ID is 100% unique -- 200,000 customers across 200,000 transactions,
+so no customer ever transacts twice.** Real payment streams do not look like
+that.
+
+Why none exist: RBI's 2018 localisation directive and the DPDP Act 2023 make
+releasing real payment data legally hazardous, NPCI holds UPI data with no
+research mandate, and fraud features are defensive secrets.
+
+**The nuance that matters.** NeurIPS BAF is *also* synthetic -- Feedzai generated
+it with a CTGAN from real bank applications under differential privacy. It scores
+0.889. The difference is that BAF was generated *from* real data while the Indian
+ones were generated *from nothing*. **Synthetic is not the problem;
+synthetic-from-nothing is.**
+
+One real Indian dataset does exist but is not fraud: L&T vehicle loan default
+(`try_lt.py`, AUC **0.6489**, in line with published benchmarks). It is loan
+default, so the defensible claim is *"no real Indian **transaction-fraud**
+dataset"* -- not the broader version.
+
+---
+
+## The GNN, retrained to the literature's own specification
+
+`gnn_tune.py`, `gnn_stage3.py` -> `artifacts/gnn_tuned.json`.
+
+The original GraphSAGE run stopped at 60 epochs **with calibration PR-AUC still
+climbing**, so "the GNN loses" was not yet a claim about the method. This answers
+the objection properly.
+
+**Learning rate** (200 epochs, patience 30): 0.05 -> 0.1235 (diverged);
+0.01 -> 0.3903 (still improving at the cap); **0.005 -> 0.3945** (converged at
+epoch 185, and the literature default); 0.001 -> 0.3467.
+
+**The heterophily hypothesis, stated in advance and refuted.**
+[arXiv:2312.06441](https://arxiv.org/html/2312.06441v3) argues mean aggregation
+is a low-pass filter that erases signal under heterophily, and that max
+aggregation or a self-residual should recover it:
+
+| Architecture | calib PR-AUC | vs baseline |
+|---|---|---|
+| **mean** | **0.3945** | -- |
+| mean + residual | 0.3866 | -0.0079 |
+| max + residual | 0.3628 | -0.0317 |
+
+**Both prescribed fixes made it worse.**
+
+| Arm | PR-AUC | ROC-AUC | Frauds caught |
+|---|---|---|---|
+| GraphSAGE untuned (60ep, K=5) | 0.2831 | 0.8174 | 554/4,064 |
+| GraphSAGE tuned (K=5) | 0.3112 | 0.8255 | 703/4,064 |
+| GraphSAGE tuned (K=25) | 0.3210 | 0.8308 | 717/4,064 |
+| **ENSEMBLE (shipped)** | **0.5220** | **0.8980** | **1,771/4,064** |
+
+Tuning was worth doing -- **+163 frauds, +29%** -- and the original run genuinely
+was undertrained. But **every gain came from training longer.** Neither
+architectural prescription helped, and the K=25 fan-out flips sign between slices
+(+0.0098 on test, -0.0016 on calibration), so it is noise rather than an effect.
+The original conclusion stands on a converged model: **1,054 fewer frauds than
+the ensemble.** Single seed (42), and labelled as such.
+
+---
+
 ## Limitations
 
 Stated plainly, because they affect how the numbers should be read.
