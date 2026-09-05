@@ -54,7 +54,7 @@ LightGBM's `bagging_seed` and `feature_fraction_seed` explicitly, so it was not
 regenerable and, when regenerated, was not quite the same number. Five frauds and
 Rs 38,164 apart. Small, but it was the headline, and nobody could have checked it.
 
-**The single most important number is Card Precision@10 = 0.919.** PR-AUC of 0.51
+**The single most important number is Card Precision@10 = 0.919.** PR-AUC of 0.52
 makes this model look mediocre, but PR-AUC measures performance over the whole
 stream — work no analyst team will ever do. Under a realistic alert budget
 (Dal Pozzolo et al.), **92% of the top ten alerts per day are genuine fraud.**
@@ -67,8 +67,8 @@ stream — work no analyst team will ever do. Under a realistic alert budget
 |---|---|
 | "a working detector, verifier or auto-responder" | Detector + three-way auto-responder (ALLOW / REVIEW / BLOCK). Runs in 7.1 ms. |
 | "for one class of loss" | Card-not-present fraud. One class, not four. |
-| "measured precision and recall on a held-out test set" | **Precision 0.604, recall 0.441** on a temporally held-out slice of 118,109 transactions. Never a random split. |
-| "honest metrics including false-positive cost" | The entire project. FPR 0.94%; false-positive cost priced in rupees (margin + customer LTV) and used to choose every threshold. |
+| "measured precision and recall on a held-out test set" | **Precision 0.621, recall 0.436** on a temporally held-out slice of 118,109 transactions. Never a random split. |
+| "honest metrics including false-positive cost" | The entire project. FPR 0.95%; false-positive cost priced in rupees (margin + customer LTV) and used to choose every threshold. |
 | "strictly defense-only" | No attack generation, no evasion testing, no synthetic fraud synthesis anywhere in the repo. The one deployment-evidence item we do not meet — adversarial robustness — is omitted *because* of this rule, and declared rather than hidden. |
 
 **The "layer underneath all four" claim, measured** (`loss_types.py`). Same model,
@@ -106,7 +106,7 @@ why the work is about the decision layer rather than a specific alert type.
 
 ## What I got wrong
 
-This section is first on purpose. Ten claims did not survive checking.
+This section is first on purpose. Eleven claims did not survive checking.
 
 **1. "Optimising F1 instead of rupees costs ₹964,857." — Dead.**
 Ran three seeds and three split points. The gap ranged from ₹0 to ₹710,488 —
@@ -425,7 +425,7 @@ vector with the primary.
 | Source | Their number | Ours |
 |---|---|---|
 | Adyen 2025 fraud report | **5% of fraud-linked identities = 58% of fraudulent value** | Independent confirmation that fraud loss is value-concentrated, which is why this project reports value-recall alongside count-recall |
-| PayPal | false-positive rate **below 5%** | **0.94%** — five times more conservative about declining genuine customers |
+| PayPal | false-positive rate **below 5%** | **0.95%** — five times more conservative about declining genuine customers |
 | Stripe Radar | fraud reduced **32%**, trained on 70 trillion data points | **24.8%** savings, trained on 413k transactions and 77 features |
 
 Not a like-for-like comparison — different metrics, incomparable data scale — but
@@ -626,9 +626,10 @@ exists -- run it.
 
 **Reproducibility note, because this was wrong.** The headline figure was
 originally produced by an inline terminal command and never committed -- no
-script in the repo generated it, and seven analysis scripts were missing from
-`run_all.py`, while the README claimed it ran "every result". Both fixed:
-`canonical.py` now produces the headline and every script is wired in.
+script in the repo generated it, while the README claimed `run_all.py` ran
+"every result". Seven analysis scripts were missing when this was first found,
+and fifteen more surfaced on a later audit. Both fixed: `canonical.py` now
+produces the headline and all 40 stages are wired in.
 
 **Which numbers are seed-verified and which are not.** Verified across three
 seeds: **the headline itself** (`canonical.py --seeds` -- recall sd 0.3%, PR-AUC
