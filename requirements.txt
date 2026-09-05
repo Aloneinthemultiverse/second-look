@@ -1,12 +1,33 @@
 # Pinned to the versions these results were produced with.
 # Python 3.14.0
+
+# --- core: needed by canonical.py, the headline result ---------------------
 lightgbm==4.7.0
+xgboost==3.3.0
 scikit-learn==1.8.0
 pandas==2.3.3
 numpy==2.4.1
-pytest==9.0.3
-kagglehub==1.0.2
+scipy==1.17.0
 
-# Optional: enables the LLM path in investigator.py.
+# --- data fetch and tests --------------------------------------------------
+kagglehub==1.0.2
+pytest==9.0.3
+
+# --- figures (plots.py) ----------------------------------------------------
+matplotlib==3.11.0
+
+# --- resampling study (resampling.py) --------------------------------------
+# Only needed to reproduce the SMOTEENN result, which is a NEGATIVE finding:
+# resampling catches 322 fewer frauds and costs Rs 2.95M more.
+imbalanced-learn==0.14.2
+
+# --- graph arm (gnn.py, gnn_tune.py, gnn_stage3.py) -------------------------
+# Heavy. Only needed to reproduce the GraphSAGE experiments, which also
+# conclude NEGATIVE -- the tuned GNN catches 1,054 fewer frauds than the
+# ensemble. Skip these two if you only want the shipped system.
+torch==2.13.0
+torch_geometric==2.8.0.post1
+
+# --- optional: enables the LLM path in investigator.py ---------------------
 # Without it the deterministic template brief is used and everything still runs.
 # anthropic>=0.40.0

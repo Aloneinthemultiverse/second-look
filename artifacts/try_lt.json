@@ -1,0 +1,70 @@
+{
+  "source": "mamtadhaker/lt-vehicle-loan-default-prediction",
+  "loss_type": "loan default (not transaction fraud)",
+  "real_data": true,
+  "rows": 233154,
+  "test_rows": 46631,
+  "defaults_total": 12063,
+  "roc_auc": 0.6489394767572843,
+  "pr_auc": 0.378135820550925,
+  "base_rate": 0.25869057065042567,
+  "lift": 1.4617302037727087,
+  "features": [
+    "disbursed_amount",
+    "asset_cost",
+    "ltv",
+    "branch_id",
+    "supplier_id",
+    "manufacturer_id",
+    "Employment.Type",
+    "State_ID",
+    "MobileNo_Avl_Flag",
+    "Aadhar_flag",
+    "PAN_flag",
+    "VoterID_flag",
+    "Driving_flag",
+    "Passport_flag",
+    "PERFORM_CNS.SCORE",
+    "PERFORM_CNS.SCORE.DESCRIPTION",
+    "PRI.NO.OF.ACCTS",
+    "PRI.ACTIVE.ACCTS",
+    "PRI.OVERDUE.ACCTS",
+    "PRI.CURRENT.BALANCE",
+    "PRI.SANCTIONED.AMOUNT",
+    "PRI.DISBURSED.AMOUNT",
+    "SEC.NO.OF.ACCTS",
+    "SEC.ACTIVE.ACCTS",
+    "SEC.OVERDUE.ACCTS",
+    "SEC.CURRENT.BALANCE",
+    "SEC.SANCTIONED.AMOUNT",
+    "SEC.DISBURSED.AMOUNT",
+    "PRIMARY.INSTAL.AMT",
+    "SEC.INSTAL.AMT",
+    "NEW.ACCTS.IN.LAST.SIX.MONTHS",
+    "DELINQUENT.ACCTS.IN.LAST.SIX.MONTHS",
+    "AVERAGE.ACCT.AGE",
+    "CREDIT.HISTORY.LENGTH",
+    "NO.OF_INQUIRIES",
+    "age_years"
+  ],
+  "two_way_blocked": 2980,
+  "two_way_caught": 1421,
+  "three_way": {
+    "ALLOW": {
+      "n": 147,
+      "frauds": 6
+    },
+    "REVIEW": {
+      "n": 46484,
+      "frauds": 12057
+    },
+    "BLOCK": {
+      "n": 0,
+      "frauds": 0
+    }
+  },
+  "reached": 12057,
+  "reached_rate": 0.9995026112907237,
+  "review_concentration": 1.0026634168121877,
+  "verdict": "MODEST BUT REAL. Loan default is intrinsically harder to predict than card fraud -- the published benchmarks for this dataset sit around 0.65 AUC, so this is in the expected range rather than disappointing."
+}

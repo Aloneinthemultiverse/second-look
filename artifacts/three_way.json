@@ -1,0 +1,128 @@
+{
+  "test_rows": 118109,
+  "frauds_total": 4064,
+  "two_way": {
+    "ALLOW": {
+      "n": 115258,
+      "frauds": 2293,
+      "genuine": 112965
+    },
+    "BLOCK": {
+      "n": 2851,
+      "frauds": 1771,
+      "genuine": 1080
+    }
+  },
+  "three_way": {
+    "25.0": {
+      "ALLOW": {
+        "n": 39847,
+        "frauds": 129,
+        "genuine": 39718
+      },
+      "REVIEW": {
+        "n": 78177,
+        "frauds": 3850,
+        "genuine": 74327
+      },
+      "BLOCK": {
+        "n": 85,
+        "frauds": 85,
+        "genuine": 0
+      },
+      "fraud_reached": 3935,
+      "fraud_reached_rate": 0.968257874015748,
+      "reviews_per_day": 1861.357142857143,
+      "auto_block_precision": 1.0,
+      "realised_loss": 2764654.6319999998
+    },
+    "50.0": {
+      "ALLOW": {
+        "n": 56761,
+        "frauds": 264,
+        "genuine": 56497
+      },
+      "REVIEW": {
+        "n": 61179,
+        "frauds": 3635,
+        "genuine": 57544
+      },
+      "BLOCK": {
+        "n": 169,
+        "frauds": 165,
+        "genuine": 4
+      },
+      "fraud_reached": 3800,
+      "fraud_reached_rate": 0.9350393700787402,
+      "reviews_per_day": 1456.642857142857,
+      "auto_block_precision": 0.9763313609467456,
+      "realised_loss": 4672728.22
+    },
+    "150.0": {
+      "ALLOW": {
+        "n": 81716,
+        "frauds": 615,
+        "genuine": 81101
+      },
+      "REVIEW": {
+        "n": 35916,
+        "frauds": 3009,
+        "genuine": 32907
+      },
+      "BLOCK": {
+        "n": 477,
+        "frauds": 440,
+        "genuine": 37
+      },
+      "fraud_reached": 3449,
+      "fraud_reached_rate": 0.8486712598425197,
+      "reviews_per_day": 855.1428571428571,
+      "auto_block_precision": 0.9224318658280922,
+      "realised_loss": 9610631.254
+    },
+    "400.0": {
+      "ALLOW": {
+        "n": 97997,
+        "frauds": 1025,
+        "genuine": 96972
+      },
+      "REVIEW": {
+        "n": 19225,
+        "frauds": 2257,
+        "genuine": 16968
+      },
+      "BLOCK": {
+        "n": 887,
+        "frauds": 782,
+        "genuine": 105
+      },
+      "fraud_reached": 3039,
+      "fraud_reached_rate": 0.7477854330708661,
+      "reviews_per_day": 457.73809523809524,
+      "auto_block_precision": 0.8816234498308907,
+      "realised_loss": 16201914.49
+    },
+    "1000.0": {
+      "ALLOW": {
+        "n": 107859,
+        "frauds": 1591,
+        "genuine": 106268
+      },
+      "REVIEW": {
+        "n": 8836,
+        "frauds": 1332,
+        "genuine": 7504
+      },
+      "BLOCK": {
+        "n": 1414,
+        "frauds": 1141,
+        "genuine": 273
+      },
+      "fraud_reached": 2473,
+      "fraud_reached_rate": 0.608513779527559,
+      "reviews_per_day": 210.38095238095238,
+      "auto_block_precision": 0.806930693069307,
+      "realised_loss": 24393550.436
+    }
+  }
+}

@@ -485,6 +485,32 @@ whatever score you have.
 
 ---
 
+## The dataset
+
+**IEEE-CIS Fraud Detection** (Vesta Corporation, Kaggle 2019).
+
+| | |
+|---|---|
+| Transactions | 590,540 card-not-present |
+| Fraud rate | 3.5% (20,663 positives) |
+| Columns | 434 present, **77 used** |
+| Currency | USD, converted at a fixed rate so every figure is in rupees |
+| Split | temporal 70 / 10 / 20, sorted by `TransactionDT`, never shuffled |
+
+**Why 357 columns are dropped.** `data.audit_leakage()` classifies every column
+and the exclusions are reported rather than implied:
+
+| Class | Count | Reason |
+|---|---|---|
+| online | 77 | available at checkout, when the decision is actually made |
+| `V_*` | 339 | Vesta's engineered features -- not computable inline |
+| `D_*` | 15 | day-offsets that grow with `TransactionDT`, so they drift |
+
+That restriction costs accuracy. `restriction_cost.py` measures how much, rather
+than leaving it as a claim.
+
+---
+
 ## Reproducing
 
 ```bash
@@ -492,10 +518,73 @@ pip install -r requirements.txt
 python fetch_data.py     # needs ~/.kaggle/kaggle.json + accepted competition rules
 python canonical.py      # the headline number on its own
 python canonical.py --seeds   # ...and its spread across 3 seeds
+python three_way.py      # allow / review / block breakdown on the ensemble
 python run_all.py        # every stage, in order (--quick skips the slow ones)
 ```
 
 Every stage writes JSON to `artifacts/`. All models train with `seed=42`.
+
+`requirements.txt` is grouped by purpose: the core block is all you need for the
+shipped system. The graph experiments pull in PyTorch and PyTorch Geometric, and
+they only reproduce a **negative** result -- skip them unless you want to check it.
+
+---
+
+## Running it on your own payments
+
+> ### Run `check_data.py` first. This is not optional.
+>
+> ```bash
+> python check_data.py path/to/your.csv
+> ```
+>
+> The pipeline is plug-and-play, and **that is exactly the danger**. Its
+> leakage audit only knows IEEE-CIS's own column prefixes, so on your data it
+> classifies *every* column as usable -- including columns that do not exist at
+> the moment you have to decide.
+>
+> This is not hypothetical. Screening nine public datasets found a status field
+> where "Declined" is 59.6% fraud, a card-state field where three of its four
+> values were **100.00%** fraud, and a reason field populated only on frauds.
+> One published dataset scores **AUC 1.0000** out of the box. Each of those
+> produces a model that is excellent offline and worthless in production.
+>
+> `check_data.py` screens for all of them and exits non-zero on anything
+> critical. It is deliberately noisy -- a flag is a question, not a verdict, and
+> the question is always the same: **at the instant you must decide, do you
+> actually have that value?**
+
+Full guide in **[ADAPTING.md](ADAPTING.md)**. The short version:
+
+**Four columns are required.** `isFraud`, `TransactionDT` (any increasing
+number -- only the order matters), `TransactionAmt`, `TransactionID`. Every other
+column is discovered automatically; there is no feature list to edit.
+
+**Three settings in `config.py`:**
+
+```python
+TRANSACTION_CSV      = DATA_DIR / "your_payments.csv"
+USD_TO_INR           = 1.0      # if your amounts are already in the target currency
+MERCHANT_MARGIN_RATE = 0.25     # your gross margin
+CUSTOMER_LTV_INR     = 2500.0   # what a lost customer actually costs you
+CHARGEBACK_FEE_INR   = 1200.0   # your acquirer's penalty
+```
+
+Those three costs are the weakest numbers in this repo -- ours are assumptions,
+yours don't have to be. Every rupee figure here is downstream of them, and
+`sensitivity.py` shows how far the conclusions move when they are wrong by ±30%.
+
+**One warning.** The `V_*` / `D_*` exclusion rules are IEEE-CIS specific. On
+another dataset those prefixes match nothing, so *every* column is treated as
+usable -- including anything computed after settlement, like a chargeback flag or
+a refund field. That will produce an excellent and completely meaningless model.
+Edit the prefixes in `data.py`, or drop those columns before loading.
+
+**What transfers unchanged:** the decision layer -- `chow_band.py`,
+`three_way.py`, `loss_types.py`, `conformal.py`, `sensitivity.py`,
+`calibrate.py`. It works on top of any scorer. The detector's weights do not
+transfer; retrain those. Swap in a better model and every result here still
+holds.
 
 **Reproducibility note, because this was wrong.** The headline figure was
 originally produced by an inline terminal command and never committed -- no

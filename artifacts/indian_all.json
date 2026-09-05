@@ -1,0 +1,142 @@
+[
+  {
+    "name": "marusagar/bank-transaction-fraud",
+    "rows": 200000,
+    "fraud_rate": 0.05044,
+    "leaks_removed": [],
+    "features": 14,
+    "auc": 0.489571972778911,
+    "pr_auc": 0.05072676415175276,
+    "base_rate": 0.051425,
+    "lift": 0.9864222489402578,
+    "frauds_total": 2057,
+    "median_amount": 49017.16,
+    "two_way_blocked": 0,
+    "two_way_caught": 0,
+    "three_way": {
+      "ALLOW": {
+        "n": 14201,
+        "frauds": 711
+      },
+      "REVIEW": {
+        "n": 25799,
+        "frauds": 1346
+      },
+      "BLOCK": {
+        "n": 0,
+        "frauds": 0
+      }
+    },
+    "reached": 1346,
+    "reached_rate": 0.6543509965969859,
+    "review_concentration": 1.0145369922818497
+  },
+  {
+    "name": "skullagos/upi-transactions-2024",
+    "rows": 250000,
+    "fraud_rate": 0.00192,
+    "leaks_removed": [
+      "transaction_status"
+    ],
+    "features": 13,
+    "auc_with_leaks": 0.5285531553916853,
+    "auc": 0.49514380109810835,
+    "pr_auc": 0.0019082395699811434,
+    "base_rate": 0.00192,
+    "lift": 0.9938747760318455,
+    "frauds_total": 96,
+    "median_amount": 630.0,
+    "two_way_blocked": 0,
+    "two_way_caught": 0,
+    "three_way": {
+      "ALLOW": {
+        "n": 49834,
+        "frauds": 96
+      },
+      "REVIEW": {
+        "n": 166,
+        "frauds": 0
+      },
+      "BLOCK": {
+        "n": 0,
+        "frauds": 0
+      }
+    },
+    "reached": 0,
+    "reached_rate": 0.0,
+    "review_concentration": 0.0
+  },
+  {
+    "name": "belbino/indian-banking-2019-2024",
+    "rows": 217428,
+    "fraud_rate": 0.008977684566845117,
+    "leaks_removed": [
+      "transaction_status",
+      "kyc_status"
+    ],
+    "features": 13,
+    "auc_with_leaks": 0.5417941645969694,
+    "auc": 0.5252288673609873,
+    "pr_auc": 0.013615413997828783,
+    "base_rate": 0.009336338131812538,
+    "lift": 1.4583248598758187,
+    "frauds_total": 406,
+    "median_amount": 2014.2150000000001,
+    "two_way_blocked": 0,
+    "two_way_caught": 0,
+    "three_way": {
+      "ALLOW": {
+        "n": 34138,
+        "frauds": 291
+      },
+      "REVIEW": {
+        "n": 9348,
+        "frauds": 115
+      },
+      "BLOCK": {
+        "n": 0,
+        "frauds": 0
+      }
+    },
+    "reached": 115,
+    "reached_rate": 0.2832512315270936,
+    "review_concentration": 1.3176575796092418
+  },
+  {
+    "name": "jatinkhandelwal/indian-financial-fraud",
+    "rows": 245091,
+    "fraud_rate": 0.03494212353778801,
+    "leaks_removed": [
+      "Transaction_Status",
+      "Fraud_Reason",
+      "Card_Status"
+    ],
+    "features": 35,
+    "auc_with_leaks": 1.0,
+    "auc": 0.8512800247836078,
+    "pr_auc": 0.5283698676415108,
+    "base_rate": 0.034292825231032865,
+    "lift": 15.407592231956704,
+    "frauds_total": 1681,
+    "median_amount": 3120.36,
+    "two_way_blocked": 1136,
+    "two_way_caught": 750,
+    "three_way": {
+      "ALLOW": {
+        "n": 31076,
+        "frauds": 314
+      },
+      "REVIEW": {
+        "n": 17943,
+        "frauds": 1367
+      },
+      "BLOCK": {
+        "n": 0,
+        "frauds": 0
+      }
+    },
+    "reached": 1367,
+    "reached_rate": 0.8132064247471743,
+    "review_concentration": 2.2216221219796988
+  }
+]

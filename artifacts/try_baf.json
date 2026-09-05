@@ -1,0 +1,83 @@
+{
+  "source": "sgpjesus/bank-account-fraud-dataset-neurips-2022",
+  "variant": "Base",
+  "test_rows": 205011,
+  "frauds_total": 2878,
+  "roc_auc": 0.8901231070425434,
+  "pr_auc": 0.18795692211839732,
+  "base_rate": 0.014038271117159567,
+  "lift": 13.388893870887683,
+  "features": [
+    "income",
+    "name_email_similarity",
+    "prev_address_months_count",
+    "current_address_months_count",
+    "customer_age",
+    "days_since_request",
+    "intended_balcon_amount",
+    "payment_type",
+    "zip_count_4w",
+    "velocity_6h",
+    "velocity_24h",
+    "velocity_4w",
+    "bank_branch_count_8w",
+    "date_of_birth_distinct_emails_4w",
+    "employment_status",
+    "credit_risk_score",
+    "email_is_free",
+    "housing_status",
+    "phone_home_valid",
+    "phone_mobile_valid",
+    "bank_months_count",
+    "has_other_cards",
+    "foreign_request",
+    "source",
+    "session_length_in_minutes",
+    "device_os",
+    "keep_alive_session",
+    "device_distinct_emails_8w",
+    "device_fraud_count",
+    "TransactionAmt"
+  ],
+  "verdict": "ARCHITECTURE WORKS. It finds real signal when real signal exists, so the Indian result was the dataset, not us.",
+  "policies": {
+    "default constants (IEEE-CIS scale)": {
+      "two_way_blocked": 304,
+      "two_way_frauds_caught": 154,
+      "three_way": {
+        "ALLOW": {
+          "n": 197823,
+          "frauds": 1636
+        },
+        "REVIEW": {
+          "n": 7187,
+          "frauds": 1241
+        },
+        "BLOCK": {
+          "n": 1,
+          "frauds": 1
+        }
+      },
+      "review_concentration": 12.300152928425609
+    },
+    "rescaled to this dataset (LTV=50)": {
+      "two_way_blocked": 1606,
+      "two_way_frauds_caught": 504,
+      "three_way": {
+        "ALLOW": {
+          "n": 201857,
+          "frauds": 2127
+        },
+        "REVIEW": {
+          "n": 2600,
+          "frauds": 556
+        },
+        "BLOCK": {
+          "n": 554,
+          "frauds": 195
+        }
+      },
+      "review_concentration": 15.233083337787996
+    }
+  }
+}

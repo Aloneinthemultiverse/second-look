@@ -1,0 +1,194 @@
+[
+  {
+    "name": "IEEE-CIS",
+    "note": "US card-not-present, the shipped dataset",
+    "rows": 590540,
+    "features": 77,
+    "test_rows": 118108,
+    "frauds_total": 4064,
+    "base_rate": 0.034409184813899145,
+    "median_amount": 530464.0,
+    "roc_auc": 0.8870363907755453,
+    "pr_auc": 0.5095065812996217,
+    "lift": 14.80728427759245,
+    "two_way_blocked": 2668,
+    "two_way_caught": 1657,
+    "three_way": {
+      "ALLOW": {
+        "n": 84992,
+        "frauds": 735
+      },
+      "REVIEW": {
+        "n": 32619,
+        "frauds": 2884
+      },
+      "BLOCK": {
+        "n": 497,
+        "frauds": 445
+      }
+    },
+    "fraud_reached": 3329,
+    "fraud_reached_rate": 0.8191437007874016,
+    "review_concentration": 2.5695095100604375
+  },
+  {
+    "name": "ULB credit card",
+    "note": "EU card, 0.17% fraud, 28 PCA components",
+    "rows": 284807,
+    "features": 30,
+    "test_rows": 56962,
+    "frauds_total": 75,
+    "base_rate": 0.001316667251852112,
+    "median_amount": 150480.0,
+    "roc_auc": 0.9375039405605265,
+    "pr_auc": 0.744767979378363,
+    "lift": 565.6463152180041,
+    "two_way_blocked": 56,
+    "two_way_caught": 51,
+    "three_way": {
+      "ALLOW": {
+        "n": 56458,
+        "frauds": 15
+      },
+      "REVIEW": {
+        "n": 454,
+        "frauds": 11
+      },
+      "BLOCK": {
+        "n": 50,
+        "frauds": 49
+      }
+    },
+    "fraud_reached": 60,
+    "fraud_reached_rate": 0.8,
+    "review_concentration": 18.401820851688694
+  },
+  {
+    "name": "NeurIPS BAF",
+    "note": "account-opening fraud, 1M rows, real benchmark",
+    "rows": 1000000,
+    "features": 30,
+    "test_rows": 200000,
+    "frauds_total": 2799,
+    "base_rate": 0.013995,
+    "median_amount": 17600.0,
+    "roc_auc": 0.889192232068796,
+    "pr_auc": 0.18606644839991793,
+    "lift": 13.295208888883025,
+    "two_way_blocked": 1262,
+    "two_way_caught": 421,
+    "three_way": {
+      "ALLOW": {
+        "n": 159689,
+        "frauds": 608
+      },
+      "REVIEW": {
+        "n": 40311,
+        "frauds": 2191
+      },
+      "BLOCK": {
+        "n": 0,
+        "frauds": 0
+      }
+    },
+    "fraud_reached": 2191,
+    "fraud_reached_rate": 0.7827795641300465,
+    "review_concentration": 3.8837020373101456
+  },
+  {
+    "name": "Sparkov",
+    "note": "simulated US card, merchant/geo features",
+    "rows": 1296675,
+    "features": 12,
+    "test_rows": 259335,
+    "frauds_total": 1538,
+    "base_rate": 0.005930553145545337,
+    "median_amount": 370163.19999999995,
+    "roc_auc": 0.9888084554165266,
+    "pr_auc": 0.653088664313249,
+    "lift": 110.12272351084293,
+    "two_way_blocked": 1669,
+    "two_way_caught": 979,
+    "three_way": {
+      "ALLOW": {
+        "n": 252401,
+        "frauds": 202
+      },
+      "REVIEW": {
+        "n": 6828,
+        "frauds": 1232
+      },
+      "BLOCK": {
+        "n": 106,
+        "frauds": 104
+      }
+    },
+    "fraud_reached": 1336,
+    "fraud_reached_rate": 0.8686605981794538,
+    "review_concentration": 30.42439796965452
+  },
+  {
+    "name": "PaySim",
+    "note": "simulated mobile money, agent-based",
+    "rows": 6362620,
+    "features": 7,
+    "test_rows": 1272524,
+    "frauds_total": 4254,
+    "base_rate": 0.0033429624902948786,
+    "median_amount": 6315123.32,
+    "roc_auc": 0.9257606025442615,
+    "pr_auc": 0.8672575391837838,
+    "lift": 259.42784033669614,
+    "two_way_blocked": 2771,
+    "two_way_caught": 2741,
+    "three_way": {
+      "ALLOW": {
+        "n": 1268716,
+        "frauds": 1016
+      },
+      "REVIEW": {
+        "n": 3598,
+        "frauds": 3029
+      },
+      "BLOCK": {
+        "n": 210,
+        "frauds": 209
+      }
+    },
+    "fraud_reached": 3238,
+    "fraud_reached_rate": 0.7611659614480489,
+    "review_concentration": 251.82950435035082
+  },
+  {
+    "name": "Indian bank",
+    "note": "SYNTHETIC -- negative control, label is a coin flip",
+    "rows": 200000,
+    "features": 14,
+    "test_rows": 40000,
+    "frauds_total": 2057,
+    "base_rate": 0.051425,
+    "median_amount": 4313510.08,
+    "roc_auc": 0.5080777974268929,
+    "pr_auc": 0.05268544548242977,
+    "lift": 1.0245103642669862,
+    "two_way_blocked": 0,
+    "two_way_caught": 0,
+    "three_way": {
+      "ALLOW": {
+        "n": 6572,
+        "frauds": 329
+      },
+      "REVIEW": {
+        "n": 33428,
+        "frauds": 1728
+      },
+      "BLOCK": {
+        "n": 0,
+        "frauds": 0
+      }
+    },
+    "fraud_reached": 1728,
+    "fraud_reached_rate": 0.8400583373845406,
+    "review_concentration": 1.0052151937113085
+  }
+]

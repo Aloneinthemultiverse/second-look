@@ -13,3 +13,10 @@ artifacts/*.npz
 __pycache__/
 *.pyc
 .env
+
+# Personal prep notes -- not part of the submission
+VIDEO_SCRIPT.md
+CONTEXT.md
+
+# NotebookLM dev tooling -- not part of the submission
+notebooklm_*.py

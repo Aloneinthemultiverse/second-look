@@ -1,0 +1,82 @@
+{
+  "source": "marusagar/bank-transaction-fraud-detection",
+  "rows": 200000,
+  "test_rows": 40000,
+  "fraud_rate": 0.05044,
+  "online_columns": [
+    "Gender",
+    "Age",
+    "State",
+    "City",
+    "Bank_Branch",
+    "Account_Type",
+    "TransactionAmt",
+    "Merchant_ID",
+    "Transaction_Type",
+    "Merchant_Category",
+    "Account_Balance",
+    "Transaction_Device",
+    "Transaction_Location",
+    "Device_Type"
+  ],
+  "roc_auc": 0.506738980358571,
+  "pr_auc": 0.05276301414375378,
+  "base_rate": 0.051425,
+  "lift_over_base": 1.0260187485416388,
+  "frauds_blocked": 0,
+  "frauds_total": 2057,
+  "block_rate": 0.0,
+  "three_way": {
+    "25.0": {
+      "ALLOW": {
+        "n": 0,
+        "frauds": 0
+      },
+      "REVIEW": {
+        "n": 40000,
+        "frauds": 2057
+      },
+      "BLOCK": {
+        "n": 0,
+        "frauds": 0
+      },
+      "fraud_reached": 2057
+    },
+    "150.0": {
+      "ALLOW": {
+        "n": 719,
+        "frauds": 47
+      },
+      "REVIEW": {
+        "n": 39281,
+        "frauds": 2010
+      },
+      "BLOCK": {
+        "n": 0,
+        "frauds": 0
+      },
+      "fraud_reached": 2010
+    },
+    "400.0": {
+      "ALLOW": {
+        "n": 2684,
+        "frauds": 141
+      },
+      "REVIEW": {
+        "n": 37316,
+        "frauds": 1916
+      },
+      "BLOCK": {
+        "n": 0,
+        "frauds": 0
+      },
+      "fraud_reached": 1916
+    }
+  },
+  "config_changes": [
+    "USD_TO_INR = 1.0",
+    "4 columns renamed",
+    "6 PII/id columns dropped"
+  ],
+  "verdict": "NO SIGNAL. The pipeline ran end to end on a new dataset with only the documented config changes -- that part of the claim holds. But this data has nothing to learn: ROC-AUC at chance, PR-AUC at the base rate. The near-uniform column distributions said as much before training. A pipeline reporting 0.5 on synthetic noise is behaving correctly; one reporting 0.9 would mean it was leaking."
+}

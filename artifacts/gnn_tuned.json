@@ -1,0 +1,101 @@
+{
+  "stage1_lr": [
+    {
+      "lr": 0.05,
+      "calib_pr_auc": 0.1235,
+      "best_epoch": 30
+    },
+    {
+      "lr": 0.01,
+      "calib_pr_auc": 0.3903,
+      "best_epoch": 200
+    },
+    {
+      "lr": 0.005,
+      "calib_pr_auc": 0.3945,
+      "best_epoch": 185
+    },
+    {
+      "lr": 0.001,
+      "calib_pr_auc": 0.3467,
+      "best_epoch": 200
+    }
+  ],
+  "stage2_arch": [
+    {
+      "aggr": "mean",
+      "residual": false,
+      "calib_pr_auc": 0.3945,
+      "best_epoch": 185
+    },
+    {
+      "aggr": "mean",
+      "residual": true,
+      "calib_pr_auc": 0.3866,
+      "best_epoch": 190
+    },
+    {
+      "aggr": "max",
+      "residual": true,
+      "calib_pr_auc": 0.3628,
+      "best_epoch": 200
+    }
+  ],
+  "best_lr": 0.005,
+  "best_aggr": "mean",
+  "best_residual": false,
+  "epochs": 200,
+  "tuned_k5": {
+    "roc_auc": 0.8254785676533956,
+    "pr_auc": 0.3112419044413473,
+    "frauds_caught": 703,
+    "frauds_total": 4064,
+    "recall": 0.17298228346456693,
+    "precision": 0.5407692307692308,
+    "fpr": 0.005234775746415889,
+    "rupee_loss": 54849805.643999994,
+    "edges": 2915877,
+    "calib_pr_auc": 0.3944519790774666,
+    "best_epoch": 185,
+    "seconds": 538
+  },
+  "tuned_k25": {
+    "roc_auc": 0.8308232124838137,
+    "pr_auc": 0.32103270644034715,
+    "frauds_caught": 717,
+    "frauds_total": 4064,
+    "recall": 0.1764271653543307,
+    "precision": 0.5731414868105515,
+    "fpr": 0.0046823622254373275,
+    "rupee_loss": 54716303.19200001,
+    "edges": 13278569,
+    "calib_pr_auc": 0.3929055824029553,
+    "best_epoch": 195,
+    "seconds": 1743
+  },
+  "untuned_reference": {
+    "roc_auc": 0.8173507992424596,
+    "pr_auc": 0.28307372122496477,
+    "frauds_caught": 554,
+    "frauds_total": 4064,
+    "recall": 0.13631889763779528,
+    "precision": 0.5496031746031746,
+    "fpr": 0.003980884738480424,
+    "rupee_loss": 55987915.402
+  },
+  "ensemble_reference": {
+    "roc_auc": 0.89796143030293,
+    "pr_auc": 0.522019152420212,
+    "frauds_caught": 1771,
+    "frauds_total": 4064,
+    "recall_count": 0.4357775590551181,
+    "recall_value": 0.4080494576386662,
+    "precision": 0.6211855489302,
+    "fpr": 0.009469946073918191,
+    "rupee_loss": 43024561.184
+  },
+  "pr_auc_gain_from_tuning": 0.03795898521538238,
+  "fan_out_effect": 0.009790801998999843,
+  "gap_to_ensemble": 0.20098644597986487,
+  "extra_frauds_from_ensemble": 1054
+}

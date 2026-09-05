@@ -1,0 +1,84 @@
+{
+  "source": "jatinkhandelwal112/indian-financial-fraud-dataset",
+  "leaks_removed": [
+    "Fraud_Reason",
+    "Card_Status",
+    "Transaction_Status",
+    "Customer_ID_card"
+  ],
+  "stages": [
+    {
+      "tag": "everything (Fraud_Reason + Card_Status)",
+      "rows": 250000,
+      "features": 39,
+      "test_positives": 2709,
+      "roc_auc": 0.9999999999999999,
+      "pr_auc": 1.0,
+      "base_rate": 0.05418,
+      "lift": 18.456995201181247,
+      "top_features": [
+        "Fraud_Reason",
+        "Transaction_Status",
+        "Card_Status",
+        "Is_International",
+        "Transaction_Amount",
+        "Credit_Limit"
+      ]
+    },
+    {
+      "tag": "leaks dropped (4), all cards",
+      "rows": 250000,
+      "features": 35,
+      "test_positives": 2709,
+      "roc_auc": 0.8008483778080531,
+      "pr_auc": 0.43256450145575387,
+      "base_rate": 0.05418,
+      "lift": 7.983840927570208,
+      "top_features": [
+        "Customer_Since",
+        "Issue_Date",
+        "Transaction_Amount",
+        "Merchant_Since",
+        "Merchant_Category",
+        "Customer_City"
+      ]
+    },
+    {
+      "tag": "Active only, all 4 leaks dropped",
+      "rows": 245091,
+      "features": 35,
+      "test_positives": 1681,
+      "roc_auc": 0.8496992868806401,
+      "pr_auc": 0.5257633477624987,
+      "base_rate": 0.034292825231032865,
+      "lift": 15.331584499684665,
+      "top_features": [
+        "Transaction_Amount",
+        "Customer_Since",
+        "Issue_Date",
+        "Merchant_Since",
+        "Merchant_Category",
+        "Is_International"
+      ]
+    },
+    {
+      "tag": "Active + behavioural history",
+      "rows": 245091,
+      "features": 42,
+      "test_positives": 1681,
+      "roc_auc": 0.8504510037036926,
+      "pr_auc": 0.5254639616990991,
+      "base_rate": 0.034292825231032865,
+      "lift": 15.322854216851958,
+      "top_features": [
+        "Transaction_Amount",
+        "Customer_Since",
+        "Issue_Date",
+        "Merchant_Since",
+        "Merchant_Category",
+        "Is_International"
+      ]
+    }
+  ],
+  "verdict": "USABLE. Real behavioural signal survives removing the rule, so the generator simulated coherent customer behaviour. This can serve as an Indian-context demonstration set, with the caveat that it is simulated and its ceiling is the generator's own rules."
+}
