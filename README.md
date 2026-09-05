@@ -532,59 +532,97 @@ they only reproduce a **negative** result -- skip them unless you want to check 
 
 ## Running it on your own payments
 
-> ### Run `check_data.py` first. This is not optional.
->
-> ```bash
-> python check_data.py path/to/your.csv
-> ```
->
-> The pipeline is plug-and-play, and **that is exactly the danger**. Its
-> leakage audit only knows IEEE-CIS's own column prefixes, so on your data it
-> classifies *every* column as usable -- including columns that do not exist at
-> the moment you have to decide.
->
-> This is not hypothetical. Screening nine public datasets found a status field
-> where "Declined" is 59.6% fraud, a card-state field where three of its four
-> values were **100.00%** fraud, and a reason field populated only on frauds.
-> One published dataset scores **AUC 1.0000** out of the box. Each of those
-> produces a model that is excellent offline and worthless in production.
->
-> `check_data.py` screens for all of them and exits non-zero on anything
-> critical. It is deliberately noisy -- a flag is a question, not a verdict, and
-> the question is always the same: **at the instant you must decide, do you
-> actually have that value?**
+Four steps, about five minutes. Full detail in **[ADAPTING.md](ADAPTING.md)**.
 
-Full guide in **[ADAPTING.md](ADAPTING.md)**. The short version:
+### 1. Give your CSV four column names
 
-**Four columns are required.** `isFraud`, `TransactionDT` (any increasing
-number -- only the order matters), `TransactionAmt`, `TransactionID`. Every other
-column is discovered automatically; there is no feature list to edit.
+Rename these four. Everything else is discovered automatically -- there is no
+feature list to edit, and you can have as many extra columns as you like.
 
-**Three settings in `config.py`:**
+| Your column becomes | What it holds |
+|---|---|
+| `isFraud` | 0 or 1 |
+| `TransactionDT` | any increasing number -- epoch seconds, a date, even row order. Only the ORDER matters. |
+| `TransactionAmt` | the amount |
+| `TransactionID` | a unique id |
 
-```python
-TRANSACTION_CSV      = DATA_DIR / "your_payments.csv"
-USD_TO_INR           = 1.0      # if your amounts are already in the target currency
-MERCHANT_MARGIN_RATE = 0.25     # your gross margin
-CUSTOMER_LTV_INR     = 2500.0   # what a lost customer actually costs you
-CHARGEBACK_FEE_INR   = 1200.0   # your acquirer's penalty
+So a file like this works:
+
+```csv
+TransactionID,TransactionDT,TransactionAmt,isFraud,channel,device,city
+1,1704067200,2499.00,0,app,android,Chennai
+2,1704067340,89999.00,1,web,windows,Delhi
+3,1704067410,349.50,0,pos,terminal,Mumbai
 ```
 
-Those three costs are the weakest numbers in this repo -- ours are assumptions,
-yours don't have to be. Every rupee figure here is downstream of them, and
-`sensitivity.py` shows how far the conclusions move when they are wrong by ±30%.
+Put it in `data/` and point `config.py` at it:
 
-**One warning.** The `V_*` / `D_*` exclusion rules are IEEE-CIS specific. On
-another dataset those prefixes match nothing, so *every* column is treated as
-usable -- including anything computed after settlement, like a chargeback flag or
-a refund field. That will produce an excellent and completely meaningless model.
-Edit the prefixes in `data.py`, or drop those columns before loading.
+```python
+TRANSACTION_CSV = DATA_DIR / "your_payments.csv"
+```
 
-**What transfers unchanged:** the decision layer -- `chow_band.py`,
-`three_way.py`, `loss_types.py`, `conformal.py`, `sensitivity.py`,
-`calibrate.py`. It works on top of any scorer. The detector's weights do not
-transfer; retrain those. Swap in a better model and every result here still
-holds.
+### 2. Screen it before you train. Do not skip this.
+
+```bash
+python check_data.py data/your_payments.csv
+```
+
+**This is the step people skip and regret.** The pipeline will happily train on
+anything you give it -- including a column that does not exist yet at the moment
+you have to decide. That kind of column does not cause an error. It just makes
+your model look excellent.
+
+Screening nine public datasets found four with one. A status field where
+"Declined" is 59.6% fraud (you only know a payment was declined *after*
+something declined it). A card-state field with three values at exactly
+**100.00%** fraud. A reason field filled in only for frauds. One of those
+datasets scores **AUC 1.0000** straight out of the box, and thousands of people
+have downloaded it.
+
+`check_data.py` catches all four and exits non-zero on anything critical. It
+passes clean on IEEE-CIS. Every flag is a question, and the question is always
+the same: **at the instant you must decide, do you actually have that value?**
+
+### 3. Put in your costs
+
+This is the part that decides every rupee figure the repo produces.
+
+```python
+# config.py
+USD_TO_INR           = 1.0      # 1.0 if your amounts are ALREADY in your currency
+MERCHANT_MARGIN_RATE = 0.25     # your gross margin
+CUSTOMER_LTV_INR     = 2500.0   # what losing a good customer actually costs you
+CHARGEBACK_FEE_INR   = 1200.0   # your acquirer's penalty per chargeback
+```
+
+**`USD_TO_INR = 1.0` matters more than it looks.** IEEE-CIS is in dollars, so
+the default multiplies every amount by 88. Leave it at 88 on rupee data and
+every cost figure is inflated 88x.
+
+Get the other three from your finance team, not from us -- ours are assumptions,
+and they are the weakest numbers in this repo. `python sensitivity.py` shows how
+far the conclusions move when they are wrong by +/-30%.
+
+### 4. Run it
+
+```bash
+python canonical.py --seeds   # the headline, across 3 seeds
+python three_way.py           # allow / review / block breakdown
+python run_all.py --quick     # everything except the slow stages
+```
+
+---
+
+**What transfers, and what does not.** The decision layer transfers unchanged --
+`chow_band.py`, `three_way.py`, `loss_types.py`, `conformal.py`,
+`sensitivity.py`, `calibrate.py`. It works on top of any scorer. The detector's
+weights do not transfer; retrain them on your traffic. Swap in a better model
+than ours and every result here still holds, and gets more valuable.
+
+**One thing to check yourself.** `data.audit_leakage()` excludes IEEE-CIS's
+`V_*` and `D_*` columns by prefix. On your data those prefixes match nothing, so
+*every* column is treated as usable. That is a safe default only because step 2
+exists -- run it.
 
 **Reproducibility note, because this was wrong.** The headline figure was
 originally produced by an inline terminal command and never committed -- no
