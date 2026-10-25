@@ -1,0 +1,36 @@
+loading ...
+training ensemble at 600 trees, seed 42 ...
+C:\Users\Sujit Narrayan M\AppData\Roaming\Python\Python314\site-packages\xgboost\training.py:200: UserWarning: [23:16:36] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:793: 
+Parameters: { "enable_categorical" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+training ensemble at 600 trees, seed 7 ...
+C:\Users\Sujit Narrayan M\AppData\Roaming\Python\Python314\site-packages\xgboost\training.py:200: UserWarning: [23:21:07] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:793: 
+Parameters: { "enable_categorical" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+training ensemble at 600 trees, seed 2024 ...
+C:\Users\Sujit Narrayan M\AppData\Roaming\Python\Python314\site-packages\xgboost\training.py:200: UserWarning: [23:25:10] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\learner.cc:793: 
+Parameters: { "enable_categorical" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+
+==============================================================
+CANONICAL RESULT  ensemble, per-instance tau*, nothing fit on test
+==============================================================
+frauds caught                                   1,771 of 4,064
+recall (count)                                           43.6%
+recall (value)                                           40.8%
+precision                                                0.621
+false-positive rate                                      0.95%
+ROC-AUC                                                 0.8980
+PR-AUC                                                  0.5220
+rupee loss                                       Rs 43,024,561
+--------------------------------------------------------------
+across seeds 42, 7, 2024:
+  recall        min 43.4%   max 43.9%   sd 0.3%
+  PR-AUC        min 0.5220   max 0.5229   sd 0.0005
+  rupee loss    min 43,024,561   max 43,461,866   sd 238,972
+==============================================================
+
+wrote C:\Users\Sujit Narrayan M\razorpay\artifacts\canonical.json

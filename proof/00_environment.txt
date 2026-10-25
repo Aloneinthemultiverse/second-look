@@ -1,0 +1,12 @@
+run date : 2026-10-25 17:50 UTC
+python   : Python 3.14.0
+commit   : ba188d69ddccefdb67bd2f06fdb1b8d392857123
+branch   : master
+clean    : 1 tracked files modified
+
+lightgbm       4.7.0
+xgboost        3.3.0
+scikit-learn   1.8.0
+pandas         2.3.3
+numpy          2.4.1
+scipy          1.17.0

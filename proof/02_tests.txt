@@ -1,0 +1,20 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.0, pytest-9.0.3, pluggy-1.6.0 -- C:\Python314\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Sujit Narrayan M\razorpay
+plugins: anyio-4.14.2, typeguard-4.6.0
+collecting ... collected 11 items
+
+test_core.py::test_split_is_strictly_ordered_in_time PASSED              [  9%]
+test_core.py::test_split_partitions_every_row_exactly_once PASSED        [ 18%]
+test_core.py::test_split_does_not_leak_rows_between_slices PASSED        [ 27%]
+test_core.py::test_audit_excludes_D_and_V_but_keeps_lookalikes PASSED    [ 36%]
+test_core.py::test_perfect_predictions_cost_nothing PASSED               [ 45%]
+test_core.py::test_blocking_nothing_costs_exactly_the_fraud PASSED       [ 54%]
+test_core.py::test_blocking_everything_costs_exactly_the_genuine PASSED  [ 63%]
+test_core.py::test_loss_is_monotone_in_threshold_extremes PASSED         [ 72%]
+test_core.py::test_platt_preserves_ranking_exactly PASSED                [ 81%]
+test_core.py::test_isotonic_creates_ties_platt_does_not PASSED           [ 90%]
+test_core.py::test_calibrator_outputs_are_probabilities PASSED           [100%]
+
+============================= 11 passed in 3.39s ==============================
