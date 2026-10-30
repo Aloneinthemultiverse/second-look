@@ -20,6 +20,21 @@
       "problemMatcher": []
     },
     {
+      "label": "TRY IT  (type an amount and a risk)",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "demo.py",
+        "--try"
+      ],
+      "detail": "Interactive. Enter any amount and fraud risk, see the decision and why.",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "1. Screen the data for leakage",
       "type": "shell",
       "command": "python",

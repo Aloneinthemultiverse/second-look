@@ -189,5 +189,94 @@ def main() -> None:
     print()
 
 
+def interactive() -> None:
+    """Type an amount and a risk, get the decision and the arithmetic behind it.
+
+    This is the same three-way rule the shipped system uses -- `chow_band.py`,
+    unchanged. Nothing is looked up or faked: the costs are recomputed from
+    config.py for whatever amount you type.
+    """
+    import config
+
+    print()
+    rule()
+    print("  TRY IT -- type an amount and a fraud risk".center(W))
+    rule()
+    print(f"  Costs from config.py: margin {config.MERCHANT_MARGIN_RATE:.0%}, "
+          f"lost customer {rupee(config.CUSTOMER_LTV_INR)},")
+    print(f"  chargeback fee {rupee(config.CHARGEBACK_FEE_INR)}.")
+    print()
+    print("  One more number is yours to set: what an analyst review costs.")
+    print("  It decides how much work the humans get. Cheap reviews and the")
+    print("  system almost never auto-blocks; expensive ones and it has to.")
+    try:
+        raw = input("\n  analyst review cost in Rs [150] > ").strip().replace(",", "")
+        review = float(raw) if raw else 150.0
+    except (EOFError, KeyboardInterrupt, ValueError):
+        review = 150.0
+    print(f"  using {rupee(review)} per review.")
+    print("\n  Blank amount, or Ctrl+C, to quit.")
+
+    while True:
+        print()
+        try:
+            raw = input("  amount in Rs            > ").strip().replace(",", "")
+            if not raw:
+                print("\n  done.\n")
+                return
+            amount = float(raw)
+            if amount <= 0:
+                print("  amount must be positive.")
+                continue
+            raw = input("  fraud risk 0-100 %      > ").strip().rstrip("%")
+            prob = float(raw) / 100.0
+            if not 0.0 <= prob <= 1.0:
+                print("  risk must be between 0 and 100.")
+                continue
+        except (EOFError, KeyboardInterrupt):
+            print("\n  done.\n")
+            return
+        except ValueError:
+            print("  that wasn't a number -- try again.")
+            continue
+
+        c_fp = amount * config.MERCHANT_MARGIN_RATE + config.CUSTOMER_LTV_INR
+        c_fn = amount + config.CHARGEBACK_FEE_INR
+        tau = c_fp / (c_fp + c_fn)
+        costs = {"ALLOW": prob * c_fn, "REVIEW": review,
+                 "BLOCK": (1 - prob) * c_fp}
+        best = min(costs, key=costs.get)
+
+        print()
+        print(f"  {'action':<9}{'expected cost':>16}   reasoning")
+        print("  " + "-" * (W - 4))
+        reasons = {
+            "ALLOW": f"{prob:.0%} chance of losing {rupee(c_fn)}",
+            "REVIEW": "an analyst's time, whatever the amount",
+            "BLOCK": f"{1-prob:.0%} chance of losing {rupee(c_fp)}",
+        }
+        for k in ("ALLOW", "REVIEW", "BLOCK"):
+            mark = " <--" if k == best else "    "
+            print(f"  {k:<9}{costs[k]:>16,.0f}{mark} {reasons[k]}")
+        print("  " + "-" * (W - 4))
+        print(f"  DECISION: {best}   (cheapest at {rupee(costs[best])})")
+        print()
+        print(f"  Two-way cutoff for this amount: tau* = {tau:.3f}")
+        if prob >= tau:
+            print(f"  Risk {prob:.0%} is above it, so a block-only system would "
+                  "decline this.")
+        else:
+            print(f"  Risk {prob:.0%} is below it, so a block-only system would "
+                  "let it through.")
+        if best == "REVIEW":
+            print("  The third lane is cheaper than either -- that is what the")
+            print("  human queue is for.")
+
+
 if __name__ == "__main__":
-    main()
+    if "--try" in sys.argv or "-i" in sys.argv:
+        interactive()
+    else:
+        main()
+        print("  Want to try your own numbers?   python demo.py --try")
+        print()
