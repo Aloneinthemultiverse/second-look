@@ -1,0 +1,193 @@
+"""Five-minute live demo. Runs in about ten seconds.
+
+    python demo.py
+
+Training the ensemble takes four minutes, which is four minutes of a progress
+bar in front of an audience. This loads the calibrated scores that
+`three_way.py` already saved and does only the decision arithmetic, which is
+instant. The scores are the real ones -- `artifacts/ensemble_test_scores.npy`,
+written by the same run that produced the headline -- so nothing here is
+staged. If that file is missing, the script says so rather than inventing
+anything.
+
+Five acts, in the order they make sense to a person who has not seen the
+project:
+
+  1. the data, and why a random split would be a lie
+  2. one transaction, three possible actions, and what each costs
+  3. the same arithmetic over the whole test set
+  4. why chasing recall bankrupts the merchant
+  5. the human lane, and what it buys
+"""
+from __future__ import annotations
+
+import sys
+import time
+from pathlib import Path
+
+import numpy as np
+
+W = 74
+ART = Path(__file__).parent / "artifacts"
+
+
+def rule(ch="="):
+    print(ch * W)
+
+
+def head(n, title):
+    print()
+    rule()
+    print(f"  {n}. {title}")
+    rule()
+
+
+def rupee(x):
+    return f"Rs {x:,.0f}"
+
+
+def pause(seconds=0.6):
+    """Let a line land before the next one. Demos read better with a beat."""
+    sys.stdout.flush()
+    time.sleep(seconds)
+
+
+def main() -> None:
+    import config
+
+    need = [ART / "ensemble_test_scores.npy", ART / "test_arrays.npz"]
+    missing = [p for p in need if not p.exists()]
+    if missing:
+        print("Cannot run the fast demo -- these are missing:")
+        for m in missing:
+            print(f"  {m}")
+        print("\nRun `python three_way.py` once to generate them (about 5 min),")
+        print("or run `python canonical.py` for the headline the slow way.")
+        raise SystemExit(1)
+
+    p = np.load(ART / "ensemble_test_scores.npy")
+    d = np.load(ART / "test_arrays.npz")
+    y, amt = d["y"].astype(int), d["amount"].astype(float)
+    n, F = len(y), int(y.sum())
+
+    print()
+    rule()
+    print("  SECOND LOOK -- cost-optimal fraud triage".center(W))
+    print("  every payment gets its own threshold".center(W))
+    rule()
+
+    # ---- 1. the data ----------------------------------------------------
+    head(1, "The data")
+    print(f"  held-out transactions   {n:>12,}")
+    print(f"  of which fraud          {F:>12,}   ({y.mean():.2%})")
+    print(f"  median amount           {rupee(np.median(amt)):>12}")
+    print()
+    print("  Split by TIME, never randomly. A random split trains on")
+    print("  transactions that happened AFTER the ones it is tested on.")
+    print("  Every score comes out higher and every one of them is a lie.")
+    pause()
+
+    # ---- 2. one transaction ---------------------------------------------
+    head(2, "Every payment gets its own threshold")
+    c_fp = lambda a: a * config.MERCHANT_MARGIN_RATE + config.CUSTOMER_LTV_INR
+    c_fn = lambda a: a + config.CHARGEBACK_FEE_INR
+    review = 150.0
+
+    print("  Blocking a genuine customer costs margin plus their future value.")
+    print("  Allowing a fraud costs the amount plus a chargeback fee. Those are")
+    print("  different numbers on every transaction, so the cutoff is too:")
+    print()
+    print(f"  {'amount':>11}{'cost if wrongly':>18}{'cost if wrongly':>18}"
+          f"{'cutoff':>10}")
+    print(f"  {'':>11}{'BLOCKED':>18}{'ALLOWED':>18}{'tau*(x)':>10}")
+    print("  " + "-" * (W - 4))
+    for a in (200.0, 2_000.0, 6_028.0, 20_000.0, 100_000.0):
+        tau = c_fp(a) / (c_fp(a) + c_fn(a))
+        note = "  <- median" if a == 6_028.0 else ""
+        print(f"  {rupee(a):>11}{c_fp(a):>18,.0f}{c_fn(a):>18,.0f}"
+              f"{tau:>10.3f}{note}")
+    print("  " + "-" * (W - 4))
+    print()
+    print("  On a Rs 200 payment the model has to be 65% sure before blocking")
+    print("  is worth it -- below that you lose more by turning away someone")
+    print("  real. On Rs 100,000 it only needs 21%. Same model, same scores;")
+    print("  the economics decide. That is Elkan (2001).")
+    print()
+    print("  Most systems pick ONE cutoff and apply it to all of this.")
+    pause()
+
+    # ---- 3. the whole test set ------------------------------------------
+    head(3, "The same arithmetic, over all of it")
+    cfp, cfn = c_fp(amt), c_fn(amt)
+    blocked = p >= cfp / (cfp + cfn)
+    tp = int((blocked & (y == 1)).sum())
+    fp = int((blocked & (y == 0)).sum())
+    print(f"  frauds caught           {tp:>12,}  of {F:,}   ({tp / F:.1%})")
+    print(f"  precision               {tp / max(blocked.sum(), 1):>12.3f}"
+          "   of everything blocked, this share was fraud")
+    print(f"  genuine customers hit   {fp:>12,}   ({fp / (y == 0).sum():.2%} "
+          "of honest traffic)")
+    pause()
+
+    # ---- 4. the recall trap ---------------------------------------------
+    head(4, "Why not just catch more?")
+    print(f"  {'recall target':>15}{'must block':>14}{'% of traffic':>15}"
+          f"{'rupee loss':>18}")
+    print("  " + "-" * (W - 4))
+    order = np.argsort(-p)
+    do_nothing = float((amt[y == 1] + config.CHARGEBACK_FEE_INR).sum())
+    for target in (0.436, 0.65, 0.85, 0.95):
+        k = int(np.searchsorted(np.cumsum(y[order]), target * F)) + 1
+        sel = np.zeros(n, bool)
+        sel[order[:k]] = True
+        loss = float((amt[(~sel) & (y == 1)] + config.CHARGEBACK_FEE_INR).sum()
+                     + (amt[sel & (y == 0)] * config.MERCHANT_MARGIN_RATE
+                        + config.CUSTOMER_LTV_INR).sum())
+        mark = "  <- ours" if abs(target - 0.436) < 1e-6 else ""
+        print(f"  {target:>14.0%}{k:>14,}{k / n:>15.1%}{loss:>18,.0f}{mark}")
+    print("  " + "-" * (W - 4))
+    print(f"  doing nothing at all{do_nothing:>27,.0f}")
+    print()
+    print("  Chasing 95% recall costs multiples of having no fraud system.")
+    print("  43.6% is not a limitation. It is where the money stops.")
+    pause()
+
+    # ---- 5. the human lane ----------------------------------------------
+    head(5, "So add a third option: ask a person")
+    cost = np.stack([p * cfn, np.full_like(p, review), (1 - p) * cfp])
+    act = cost.argmin(axis=0)
+    print(f"  {'lane':>10}{'transactions':>16}{'share':>9}{'frauds':>10}"
+          f"{'of all fraud':>15}")
+    print("  " + "-" * (W - 4))
+    for i, nm in enumerate(("ALLOW", "REVIEW", "BLOCK")):
+        m = act == i
+        f = int((m & (y == 1)).sum())
+        print(f"  {nm:>10}{int(m.sum()):>16,}{m.mean():>9.1%}{f:>10,}"
+              f"{f / F:>15.1%}")
+    print("  " + "-" * (W - 4))
+    rev = act == 1
+    reached = int(((act > 0) & (y == 1)).sum())
+    conc = (int((rev & (y == 1)).sum()) / F) / max(rev.mean(), 1e-9)
+    blk = act == 2
+    print(f"  fraud reached (review+block)  {reached:>6,} of {F:,}"
+          f"   ({reached / F:.1%})   vs {tp / F:.1%} by blocking alone")
+    print(f"  review lane is {conc:.1f}x denser in fraud than the traffic it holds")
+    if blk.sum():
+        print(f"  auto-block precision          "
+              f"{int((blk & (y == 1)).sum()) / blk.sum():>6.1%}"
+              f"   ({int((blk & (y == 0)).sum())} genuine customers touched)")
+    print()
+    rule()
+    print("  The machine handles the easy cases. A human handles the hard ones.")
+    print("  The machine decides which is which -- using money, not a guess.")
+    rule()
+    print()
+    print("  Full write-up and what was retracted:  README.md")
+    print("  Verification record from a real run:   RESULTS.md")
+    print("  Interactive version:")
+    print("  https://claude.ai/code/artifact/117f9074-3828-4b71-ba5c-7eda18062371")
+    print()
+
+
+if __name__ == "__main__":
+    main()

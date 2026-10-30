@@ -1,0 +1,116 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "DEMO  (3 seconds \u2014 start here)",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "demo.py"
+      ],
+      "detail": "The whole story in five acts. Uses saved scores, so no training wait.",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "1. Screen the data for leakage",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "check_data.py"
+      ],
+      "detail": "~1 min. Checks all 393 columns. Expect: 0 findings, 'Clear to train'.",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "2. THE HEADLINE  (1,771 of 4,064 frauds)",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "canonical.py"
+      ],
+      "detail": "~4 min. Trains the 3-model ensemble and reproduces the headline.",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "3. Allow / review / block breakdown",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "three_way.py"
+      ],
+      "detail": "~5 min. The three-lane decision on the shipped ensemble.",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "4. Run the tests",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "-m",
+        "pytest",
+        "test_core.py",
+        "-v"
+      ],
+      "detail": "~5 sec. 11 tests. Fastest thing to show that it works.",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "5. Headline across 3 seeds  (the strong version)",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "canonical.py",
+        "--seeds"
+      ],
+      "detail": "~12 min. Proves the result is stable, not a lucky seed.",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "6. Everything (slow stages skipped)",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "run_all.py",
+        "--quick"
+      ],
+      "detail": "~25 min. Runs the whole pipeline end to end.",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
