@@ -20,6 +20,21 @@
       "problemMatcher": []
     },
     {
+      "label": "THE MODEL  (predictive performance)",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "demo.py",
+        "--model"
+      ],
+      "detail": "Separation, decile lift, calibration table, ROC/PR-AUC, precision@k.",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "TRY IT  (type an amount and a risk)",
       "type": "shell",
       "command": "python",

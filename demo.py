@@ -189,6 +189,99 @@ def main() -> None:
     print()
 
 
+def model_quality() -> None:
+    """The predictive half: does the model discriminate, and do its numbers mean
+    anything?
+
+    The rest of the demo takes P(fraud) as given and reasons about what to do
+    with it. That is the decision layer. This act is about the model that
+    produces the probability in the first place -- separation, ranking, and
+    above all CALIBRATION, because the cost arithmetic is only valid if a
+    predicted 0.30 really does default 30% of the time.
+    """
+    from sklearn.metrics import average_precision_score, roc_auc_score
+
+    p = np.load(ART / "ensemble_test_scores.npy")
+    d = np.load(ART / "test_arrays.npz")
+    y = d["y"].astype(int)
+    n, F = len(y), int(y.sum())
+
+    print()
+    rule()
+    print("  THE MODEL -- how good is the prediction itself?".center(W))
+    rule()
+
+    print()
+    print("  SEPARATION   does it tell the two classes apart?")
+    print("  " + "-" * (W - 4))
+    print(f"  mean score, genuine     {p[y == 0].mean():>10.4f}")
+    print(f"  mean score, fraud       {p[y == 1].mean():>10.4f}"
+          f"   {p[y == 1].mean() / p[y == 0].mean():.0f}x higher")
+    print(f"  median score, genuine   {np.median(p[y == 0]):>10.4f}")
+    print(f"  median score, fraud     {np.median(p[y == 1]):>10.4f}")
+
+    print()
+    print("  RANKING      if you sort by score, where does the fraud land?")
+    print("  " + "-" * (W - 4))
+    print(f"  {'decile':>10}{'transactions':>15}{'frauds':>10}{'fraud rate':>13}"
+          f"{'lift':>9}")
+    order = np.argsort(-p)
+    base = y.mean()
+    for i in range(10):
+        lo, hi = i * n // 10, (i + 1) * n // 10
+        seg = y[order[lo:hi]]
+        r = seg.mean()
+        print(f"  {'top ' + str(i + 1) if i == 0 else i + 1:>10}"
+              f"{len(seg):>15,}{int(seg.sum()):>10,}{r:>13.2%}"
+              f"{r / base:>8.1f}x")
+    print("  " + "-" * (W - 4))
+    top = y[order[:n // 10]]
+    print(f"  The top 10% of scores holds {top.sum() / F:.1%} of all fraud.")
+
+    print()
+    print("  CALIBRATION  when it says 30%, does 30% of it turn out to be fraud?")
+    print("  " + "-" * (W - 4))
+    print(f"  {'predicted band':>18}{'count':>11}{'predicted':>13}{'actual':>11}"
+          f"{'gap':>9}")
+    edges = [0.0, 0.01, 0.05, 0.10, 0.25, 0.50, 0.75, 1.01]
+    worst = 0.0
+    for lo, hi in zip(edges, edges[1:]):
+        m = (p >= lo) & (p < hi)
+        if m.sum() < 50:
+            continue
+        pred, act = p[m].mean(), y[m].mean()
+        worst = max(worst, abs(pred - act))
+        print(f"  {f'{lo:.2f} - {min(hi, 1.0):.2f}':>18}{int(m.sum()):>11,}"
+              f"{pred:>13.3f}{act:>11.3f}{act - pred:>+9.3f}")
+    print("  " + "-" * (W - 4))
+    print(f"  Largest gap between predicted and actual: {worst:.3f}")
+    print()
+    print("  This is the act that licenses everything else. Multiplying a score")
+    print("  by a rupee cost is only meaningful if the score is a probability.")
+    print("  Platt scaling, fitted on a slice held out in time -- not isotonic,")
+    print("  which collapsed 111,512 distinct scores into 167 levels and")
+    print("  destroyed the ranking above.")
+
+    print()
+    print("  AGGREGATE")
+    print("  " + "-" * (W - 4))
+    print(f"  ROC-AUC                 {roc_auc_score(y, p):>10.4f}")
+    print(f"  PR-AUC                  {average_precision_score(y, p):>10.4f}")
+    print(f"  PR-AUC if guessing      {base:>10.4f}"
+          f"   so {average_precision_score(y, p) / base:.0f}x better than chance")
+    print()
+    for k in (10, 50, 200):
+        sel = y[order[:k]]
+        print(f"  precision @ top {k:<4}    {sel.mean():>10.1%}"
+              f"   an analyst opening {k} cases a day")
+    print()
+    rule()
+    print("  Prediction gets you the probability. The next part decides what")
+    print("  to do with it -- run `python demo.py` for that.")
+    rule()
+    print()
+
+
 def interactive() -> None:
     """Type an amount and a risk, get the decision and the arithmetic behind it.
 
@@ -276,7 +369,10 @@ def interactive() -> None:
 if __name__ == "__main__":
     if "--try" in sys.argv or "-i" in sys.argv:
         interactive()
+    elif "--model" in sys.argv or "-m" in sys.argv:
+        model_quality()
     else:
         main()
-        print("  Want to try your own numbers?   python demo.py --try")
+        print("  The model behind it:            python demo.py --model")
+        print("  Try your own numbers:           python demo.py --try")
         print()
